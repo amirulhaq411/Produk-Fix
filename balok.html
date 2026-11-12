@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Balok — Jelajah Bangun Ruang</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Work+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared.css">
+</head>
+<body data-module="balok-utama" data-next="balok-penyelidikan.html">
+
+<header class="topbar">
+  <span class="brand">Jelajah Bangun Ruang</span>
+  <nav><a href="pilih-bangun.html">Beranda</a></nav>
+</header>
+
+<div class="wrap">
+  <div>
+<!-- Fase 1: Orientasi Masalah -->
+<section class="phase" data-step="1">
+  <div class="fase-badge">Fase 1 · Orientasi Masalah</div>
+  <h2>Misi Kardus Souvenir Gerabah Kasongan</h2>
+
+  <!-- Gambar Kardus -->
+  <img src="balok-bu-sari.jpg" alt="Kardus souvenir gerabah Bu Sari berbentuk balok" style="width:100%; max-width:320px; display:block; margin:0 auto 1rem; border-radius:8px;">
+
+  <!-- Pemutar Audio Cerita Bu Sari -->
+  <div style="background:var(--warn-bg); border:1.5px solid var(--accent); border-radius:var(--radius-sm); padding:1rem; margin-bottom:1.25rem;">
+    <p style="margin:0 0 .5rem; font-weight:700; color:var(--accent-dark);">🎙️ Dengarkan Pesan dari Bu Sari</p>
+    <audio id="audio-fase1" src="audio-sari.mp4"></audio>
+    <button id="btn-audio1" class="btn-primary" onclick="toggleAudio('audio-fase1', 'btn-audio1')">
+      <span>🔊</span> <span>Dengarkan Cerita Bu Sari</span>
+    </button>
+  </div>
+
+  <details class="term-chip"><summary>Baca teks pesan Bu Sari</summary>
+  <div class="term-chip-content"><p>Halo, adik-adik! Kenalkan, aku Bu Sari, pengrajin gerabah dari Kasongan, Bantul.<br><br>
+Toko oleh-oleh di Malioboro memesan 250 kardus souvenir gerabah mini dariku. Isinya kemasan-kemasan kecil berbentuk kubus berukuran 10 sentimeter. Kardusnya berbentuk balok, dengan panjang 40, lebar 30, dan tinggi 20 sentimeter.<br><br>
+Masalahnya, gerabah itu mudah pecah. Kardus dikirim pakai truk ekspedisi yang sering berguncang, dan ditumpuk lima tingkat. Kalau kardusnya penyok, gerabahku bisa retak!<br><br>
+Karena itu, aku butuh bantuan kalian untuk tiga hal.<br><br>
+<strong>Pertama, rangkanya.</strong> Pemasok menjual pelindung sudut dan lis penguat yang sudah dipotong per ukuran. Berapa banyak yang harus aku pesan untuk satu kardus?<br><br>
+<strong>Kedua, kartonnya.</strong> Karton dipotong dari lembaran persegi panjang. Aku mau pola jaring-jaring yang paling hemat, supaya sisa potongannya sedikit.<br><br>
+<strong>Ketiga, isinya.</strong> Berapa besar ruang di dalam kardus, dan berapa kemasan kecil yang muat?<br><br>
+Oh ya, pembeli dari luar kota minta kardus jumbo dengan ukuran dua kali lipat. Nanti kita lihat, apa saja yang berubah!<br><br>
+Semua temuan kalian, catat di Lembar Pesanan, ya. Itu yang akan aku kirim ke pemasok.<br><br>
+Sebelum mulai, coba tebak dulu: kalau kardus ditumpuk lima tingkat, beban akan turun lewat bagian mana? Siap? Yuk, kita mulai!</p></div>
+</details>
+
+  <!-- Teks 3 Tantangan Utama Misi -->
+  <p style="font-size:1rem; line-height:1.6;">
+    Berdasarkan pesan suara dari Bu Sari di atas, bantu Bu Sari memecahkan <strong>3 tantangan utama</strong> dalam merancang kardus souvenir gerabah ini:
+  </p>
+
+  <ul class="task-list" style="margin-bottom: 1.5rem;">
+    <li><strong>Tantangan 1 (Kekuatan Rangka):</strong> Truk ekspedisi sering berguncang dan kardus ditumpuk 5 tingkat. Bu Sari perlu tahu berapa banyak <em>pelindung sudut</em> dan <em>lis penguat</em> (per ukuran panjang) yang harus dipesan untuk satu kardus agar tidak penyok.</li>
+    <li><strong>Tantangan 2 (Efisiensi Bahan):</strong> Mendesain pola jaring-jaring karton yang paling hemat (minimal sisa potongan) dan menghitung luas karton per kardus untuk menekan biaya produksi.</li>
+    <li><strong>Tantangan 3 (Kapasitas Presisi):</strong> Menentukan volume kardus dan banyak kemasan kecil (kubus 10 cm) yang muat. Bu Sari juga berencana membuat kardus jumbo, jadi ia perlu tahu seberapa besar perubahan lis, karton, dan isinya.</li>
+  </ul>
+
+  <div class="lkpd-prompt">
+    <strong>📋 Lembar Pesanan Kardus Bu Sari</strong>
+    <p style="margin:.3rem 0;">Kardus contoh berukuran <strong>40 × 30 × 20 cm</strong>. Kardus jumbo berukuran <strong>2× lipat</strong>. Lembar ini kamu lengkapi sepanjang penyelidikan:</p>
+    <ol style="margin:0 0 .3rem 1.2rem;">
+      <li><strong>Rangka</strong>: pelindung sudut, lis penguat, panel sisi (Bagian A)</li>
+      <li><strong>Karton</strong>: pola jaring-jaring dan luas bahan (Bagian B)</li>
+      <li><strong>Isi</strong>: kapasitas dan efek ukuran jumbo (Bagian C)</li>
+    </ol>
+    <em>Isinya menjadi dasar proposalmu di Fase 4. Salah hitung berarti salah pesan!</em>
+  </div>
+
+  <!-- Istilah Kunci -->
+  <p style="font-weight:700; color:var(--secondary); margin-bottom:.4rem;">Istilah Kunci Penyelidikan</p>
+
+  <details class="term-chip"><summary>Panjang, lebar, tinggi</summary>
+    <div class="term-chip-content"><p>Tiga ukuran balok: panjang dan lebar pada alas, serta tinggi yang tegak.</p></div>
+  </details>
+  <details class="term-chip"><summary>Sisi</summary>
+    <div class="term-chip-content"><p>Bidang datar pembatas balok (berbentuk persegi panjang).</p></div>
+  </details>
+  <details class="term-chip"><summary>Rusuk</summary>
+    <div class="term-chip-content"><p>Garis pertemuan dua sisi (tiang penyangga rangka).</p></div>
+  </details>
+  <details class="term-chip"><summary>Titik sudut</summary>
+    <div class="term-chip-content"><p>Titik pertemuan tiga rusuk (pojok kardus).</p></div>
+  </details>
+  <details class="term-chip"><summary>Pelindung sudut</summary>
+    <div class="term-chip-content"><p>Pelindung yang dipasang di pojok kardus, satu untuk setiap titik sudut.</p></div>
+  </details>
+  <details class="term-chip"><summary>Lis penguat</summary>
+    <div class="term-chip-content"><p>Batang penguat yang dipasang menempel sepanjang rusuk. Dijual per ukuran panjang.</p></div>
+  </details>
+  <details class="term-chip"><summary>Jaring-jaring</summary>
+    <div class="term-chip-content"><p>Pola karton datar saat kardus dibentangkan.</p></div>
+  </details>
+  <details class="term-chip"><summary>Luas permukaan</summary>
+    <div class="term-chip-content"><p>Total luas seluruh karton pembungkus kardus.</p></div>
+  </details>
+  <details class="term-chip"><summary>Volume</summary>
+    <div class="term-chip-content"><p>Kapasitas total ruang di dalam kardus.</p></div>
+  </details>
+  <details class="term-chip"><summary>Satuan kubik</summary>
+    <div class="term-chip-content"><p>Kubus kecil pembanding untuk mengukur isi ruang.</p></div>
+  </details>
+
+  <!-- Tantangan Spasial Awal -->
+  <div class="answer-row" style="flex-direction:column; align-items:stretch; margin-top:1.5rem;">
+    <label for="input-pemanasan-utama" style="color:var(--primary); font-weight:700;">Tantangan Spasial Awal</label>
+    <p style="margin:.25rem 0 .5rem; font-size:0.95rem;">Amati gambar kardus, lalu bayangkan kardus itu dilihat tepat dari <strong>arah atas</strong>:</p>
+    <ol style="margin:0 0 .5rem 1.2rem; padding:0; font-size:0.95rem; line-height:1.6;">
+      <li>Berapa titik sudut yang terlihat langsung, dan berapa yang tersembunyi?</li>
+      <li>Saat ditumpuk 5 tingkat, beban turun lewat bagian mana: titik sudut, rusuk tegak, atau rusuk mendatar? Mengapa?</li>
+    </ol>
+    <textarea id="input-pemanasan-utama" placeholder="Tuliskan dugaan awalmu di sini..." style="min-height:65px;"></textarea>
+  </div>
+
+  <!-- Tombol Navigasi Lanjut ke Fase 2 -->
+  <div class="step-actions" style="margin-top:1.5rem;">
+    <span></span>
+    <button class="btn-primary" onclick="localStorage.setItem('kubus_pemanasan', document.getElementById('input-pemanasan-utama').value.trim()); goToStep(2)">Lanjut: Organisasi Belajar →</button>
+  </div>
+</section>
+
+    <!-- Fase 2: Organisasi Belajar -->
+<section class="phase" data-step="2" hidden>
+  <div class="fase-badge">Fase 2 · Organisasi Belajar</div>
+  <h2>Menyusun Strategi &amp; Rencana Penyelidikan</h2>
+
+  <!-- 1. Identitas & Peran Kelompok -->
+  <div class="lkpd-prompt" style="margin-bottom: 1.25rem;">
+    <p style="margin:0; font-weight:700;">👥 Identitas &amp; Pembagian Peran Kelompok</p>
+    <p style="margin:.3rem 0 .75rem; font-size:0.92rem;">Diskusikan bersama dan pilih peranmu dalam kelompok hari ini:</p>
+    
+    <div style="display:flex; flex-direction:column; gap:.75rem;">
+      <div>
+        <label for="input-kelompok-kode" style="font-weight:700; font-size:0.9rem;">Kode Kelompok:</label>
+        <input type="text" id="input-kelompok-kode" placeholder="Contoh: KLP-GERABAH-1" style="margin-top:.2rem;">
+      </div>
+
+      <div>
+        <label for="select-peran-siswa" style="font-weight:700; font-size:0.9rem;">Peranmu di Kelompok:</label>
+        <select id="select-peran-siswa" style="width:100%; padding:.5rem; margin-top:.2rem; border:1.5px solid var(--border); border-radius:6px; font-family:inherit;">
+          <option value="">-- Pilih Peran --</option>
+          <option value="operator">Operator Web / Simulasi GeoGebra</option>
+          <option value="pengamat">Pengamat Spasial &amp; Rangka</option>
+          <option value="pencatat">Pencatat Hasil &amp; Pembuat Strategi</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. Peta Alur Penyelidikan (3 Check-Points) -->
+  <p style="font-weight:700; color:var(--primary); margin:1.25rem 0 .5rem;">🗺️ Alur Penyelidikan &amp; Titik Henti Wajib (Check-Points)</p>
+  <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)); gap:.75rem; margin-bottom:1.25rem;">
+    <div style="background:var(--surface); border:1.5px solid var(--border); padding:.75rem; border-radius:8px; font-size:0.88rem;">
+      <strong style="color:var(--secondary); display:block; margin-bottom:.2rem;">📍 Check-Point 1</strong>
+      Penyelidikan Unsur &amp; Rotasi Mental Rangka 3D
+    </div>
+    <div style="background:var(--surface); border:1.5px solid var(--border); padding:.75rem; border-radius:8px; font-size:0.88rem;">
+      <strong style="color:var(--secondary); display:block; margin-bottom:.2rem;">📍 Check-Point 2</strong>
+      Eksplorasi Jaring-jaring &amp; Luas Karton
+    </div>
+    <div style="background:var(--surface); border:1.5px solid var(--border); padding:.75rem; border-radius:8px; font-size:0.88rem;">
+      <strong style="color:var(--secondary); display:block; margin-bottom:.2rem;">📍 Check-Point 3</strong>
+      Kapasitas Volume &amp; Perubahan Proporsional
+    </div>
+  </div>
+
+  <!-- 3. Prediksi & Safe-to-Fail Strategy -->
+  <div class="answer-row" style="flex-direction:column; align-items:stretch; margin-top:1rem;">
+    <label for="input-prediksi-utama" style="font-weight:700;">Prediksi Awal &amp; Komitmen Berani Salah:</label>
+    <p style="margin:0 0 .4rem; font-size:0.88rem; color:var(--muted);">Tuliskan dugaan jumlah unsur balok (sisi, rusuk, titik sudut), apakah semua rusuk dan semua sisinya sama ukuran, serta apa yang akan kelompok kalian lakukan jika nanti hasil simulasi berbeda dari dugaan kalian.</p>
+    <textarea id="input-prediksi-utama" placeholder="Tuliskan dugaan kelompokmu (berapa sisi, rusuk, titik sudut? apakah ada yang sama ukuran?) dan apa yang akan kalian lakukan jika hasil simulasi ternyata berbeda..." style="min-height:80px;"></textarea>
+  </div>
+
+  <!-- Tombol Navigasi -->
+  <div class="step-actions" style="margin-top:1.5rem;">
+    <button class="btn-ghost" onclick="prevStep(2)">← Fase Sebelumnya</button>
+    <button class="btn-primary" onclick="prosesLanjutPenyelidikan()">Lanjut: Penyelidikan →</button>
+  </div>
+</section>
+  </div>
+</div>
+
+<script>
+  // Pembersih otomatis khusus halaman balok utama agar selalu mulai dari Fase 1
+  var currentStorage = localStorage.getItem('pbl_balok-utama');
+  if (currentStorage) {
+    try {
+      var parsed = JSON.parse(currentStorage);
+      if (parsed.step > 1) {
+        parsed.step = 1;
+        localStorage.setItem('pbl_balok-utama', JSON.stringify(parsed));
+      }
+    } catch(e) {}
+  }
+</script>
+<script type="module" src="shared.js"></script>
+</body>
+</html>

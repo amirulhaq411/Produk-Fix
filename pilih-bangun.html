@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pilih Bangun Ruang — GeoCeria</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #FF9F1C;
+            --secondary: #2EC4B6;
+            --accent: #FFBF69;
+            --background: #FDFFFC;
+            --text-dark: #011627;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Nunito', sans-serif;
+        }
+
+        body {
+            background-color: var(--background);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        nav {
+            background-color: var(--secondary);
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: 900;
+            color: white;
+            text-decoration: none;
+            letter-spacing: 2px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .modules {
+            padding: 5rem 5%;
+            text-align: center;
+        }
+
+        .modules h2 {
+            font-size: 2.5rem;
+            color: var(--secondary);
+            margin-bottom: 3rem;
+        }
+
+        .card-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 25px;
+        }
+
+        .card {
+            background: white;
+            padding: 2rem 1.5rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            transition: transform 0.3s;
+            border-bottom: 5px solid var(--secondary);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            border-bottom-color: var(--primary);
+        }
+
+        .card-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        .card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+        }
+
+        .card p {
+            color: #666;
+            margin-bottom: 1.5rem;
+            flex-grow: 1;
+        }
+
+        .card .btn-small {
+            padding: 10px 20px;
+            font-size: 1rem;
+            background-color: var(--secondary);
+            border-radius: 25px;
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            width: 100%;
+            transition: background-color 0.3s;
+        }
+        
+        .card .btn-small:hover {
+            background-color: #239b90;
+        }
+
+        footer {
+            background-color: var(--text-dark);
+            color: white;
+            text-align: center;
+            padding: 2rem 5%;
+            margin-top: 3rem;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="index.html" class="logo">GeoCeria</a>
+        <div class="nav-links">
+            <a href="index.html">Beranda</a>
+            <a href="pilih-bangun.html">Materi</a>
+            <a href="pilih-bangun.html">Tantangan Kuis</a>
+        </div>
+    </nav>
+
+    <section class="modules" id="materi">
+        <h2>Pilih Modul Petualanganmu</h2>
+        <div class="card-container">
+            
+            <div class="card">
+                <div class="card-icon">🧊</div>
+                <h3>Kubus</h3>
+                <p>Jelajahi bangun ruang yang semua sisinya sama panjang. Mari bongkar jaring-jaringnya!</p>
+                <a href="kubus.html" class="btn-small">Eksplorasi</a>
+            </div>
+
+            <div class="card">
+                <div class="card-icon">📦</div>
+                <h3>Balok</h3>
+                <p>Kenali sifat dasar balok yang sering kita temui, seperti bentuk ruang kelas atau kardus barang.</p>
+                <a href="balok.html" class="btn-small">Eksplorasi</a>
+            </div>
+            
+            <div class="card">
+                <div class="card-icon">⛺</div>
+                <h3>Prisma</h3>
+                <p>Pahami konsep luas permukaan dan volume prisma melalui pemecahan masalah nyata di sekitarmu!</p>
+                   <span class="btn-small" style="display:block; text-align:center; opacity:.55; cursor:not-allowed;">Segera hadir</span>
+            </div>
+
+            <div class="card">
+                <div class="card-icon">🔺</div>
+                <h3>Limas</h3>
+                <p>Pelajari misteri bentuk piramida dan bangun ruang meruncing lainnya secara interaktif.</p>
+                   <span class="btn-small" style="display:block; text-align:center; opacity:.55; cursor:not-allowed;">Segera hadir</span>
+            </div>
+
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 GeoCeria - Media Pembelajaran Interaktif Kelas 8.</p>
+    </footer>
+
+</body>
+</html>

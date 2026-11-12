@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kubus · Solusi 3 Tantangan Pak Tono (Fase 4)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="shared.css">
+  
+  <!-- Konfigurasi MathJax untuk merender rumus matematika -->
+  <script>
+    window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] } };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+
+  <!-- CSS Khusus Kartu Kalkulasi -->
+  <style>
+    .kalkulasi-card {
+      border: 1px solid #e2e8f0; 
+      border-radius: 12px; 
+      padding: 1.25rem; 
+      background: #ffffff;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+      margin-top: 1rem;
+    }
+    .kalkulasi-card .card-title {
+      font-size: 1rem; 
+      font-weight: 700; 
+      color: #0f172a; 
+      margin-top: 0; 
+      margin-bottom: 1rem; 
+      display: flex; 
+      align-items: center; 
+      gap: 0.5rem;
+    }
+    .kalkulasi-card input[type="number"] {
+      width: 100%; 
+      padding: 0.6rem 0.8rem; 
+      border: 1px solid #cbd5e1; 
+      border-radius: 6px; 
+      font-size: 1rem; 
+      font-family: inherit; 
+      box-sizing: border-box; 
+      margin-bottom: 1rem; 
+      outline: none;
+      color: #334155;
+    }
+    .kalkulasi-card input[type="number"]:focus {
+      border-color: #1eb8b1;
+    }
+    .btn-teal-outline {
+      background: transparent; 
+      border: 2px solid #1eb8b1; 
+      color: #1eb8b1; 
+      border-radius: 999px;
+      padding: 0.5rem 1.5rem; 
+      font-size: 1rem; 
+      font-weight: 700; 
+      cursor: pointer; 
+      transition: all 0.2s; 
+      font-family: inherit;
+    }
+    .btn-teal-outline:hover {
+      background: #f0fdfa;
+    }
+  </style>
+</head>
+<body data-module="kubus-hasil">
+
+  <header class="topbar">
+    <span class="brand">Jelajah Bangun Ruang</span>
+    <nav><a href="kubus.html">← Menu Kubus</a></nav>
+  </header>
+
+  <main class="container">
+    <section class="phase" data-step="1">
+      <div class="fase-badge">Fase 4 · Pengembangan &amp; Penyajian Solusi</div>
+      <h2>Menjawab 3 Tantangan Utama Kotak Kemasan Pak Tono</h2>
+      <p>Berdasarkan penyelidikan di Fase 3 dan <strong>Lembar Pesananmu</strong>, mari selesaikan 3 tantangan utama Pak Tono (Kekuatan Rangka, Efisiensi Bahan, dan Kapasitas Presisi) dengan rumus formal matematika.</p>
+      <!-- TANTANGAN 1: KEKUATAN RANGKA (PESANAN PELINDUNG SUDUT & LIS) -->
+      <div style="background:#ffffff; border:1px solid #e2e8f0; border-radius:12px; padding:1.25rem; margin-bottom:1.5rem;">
+        <h3 style="margin-top:0; color:#1eb8b1;">Tantangan 1 — Kekuatan Rangka: Pesanan Pelindung Sudut &amp; Lis</h3>
+        <p style="font-size:0.95rem; line-height:1.5;">Kotak Pak Tono berrusuk <strong>15 cm</strong>. Pelindung sudut dipasang di setiap titik sudut, dan lis penguat dipasang sepanjang setiap rusuk. Gunakan Lembar Pesananmu:</p>
+        <div class="lkpd-prompt" id="rekap-catatan"></div>
+
+        <div style="margin-top:1.5rem;">
+          <p style="margin-bottom:0.5rem; font-weight:500;">Panjang total lis penguat untuk <strong>1 kotak</strong> (dalam cm):</p>
+          <div class="answer-row">
+            <input type="text" id="input-lis" size="6">
+            <button class="btn-primary" onclick="checkAnswer('input-lis', ['180', '180 cm', '180cm'], 'feedback-lis', 'unsur_lis')">Cek Jawaban</button>
+          </div>
+          <p class="feedback" id="feedback-lis" hidden></p>
+          <button class="btn-hint" style="margin-top:0.5rem;" onclick="revealHint('lis', 1)">Butuh petunjuk?</button>
+          <div class="hint-level" id="lis-level-1" hidden style="font-size:0.85rem; color:#64748b; margin-top:0.3rem;">💡 Petunjuk: Satu lis dipasang di setiap rusuk. Kalikan banyak rusuk di catatanmu dengan panjang satu rusuk (15 cm).</div>
+        </div>
+
+        <div style="margin-top:1.5rem;">
+          <p style="margin-bottom:0.5rem; font-weight:500;">Pak Tono memproduksi <strong>250 kotak</strong>. Berapa <em>pelindung sudut</em> yang harus dipesan?</p>
+          <div class="answer-row">
+            <input type="text" id="input-pesan-titik" size="6">
+            <button class="btn-primary" onclick="checkAnswer('input-pesan-titik', ['2000', '2.000'], 'feedback-pesan-titik', 'pesan_titik')">Cek Jawaban</button>
+          </div>
+          <p class="feedback" id="feedback-pesan-titik" hidden></p>
+          <button class="btn-hint" style="margin-top:0.5rem;" onclick="revealHint('pesantitik', 1)">Butuh petunjuk?</button>
+          <div class="hint-level" id="pesantitik-level-1" hidden style="font-size:0.85rem; color:#64748b; margin-top:0.3rem;">💡 Petunjuk: Satu kotak butuh pelindung sebanyak titik sudutnya. Kalikan dengan 250.</div>
+        </div>
+
+        <div style="margin-top:1.5rem;">
+          <p style="margin-bottom:0.5rem; font-weight:500;">⭐ Ekstra: untuk <strong>250 kotak</strong> itu, berapa <em>meter</em> lis penguat yang harus dipesan?</p>
+          <div class="answer-row">
+            <input type="text" id="input-pesan-lis" size="6">
+            <button class="btn-primary" onclick="checkAnswer('input-pesan-lis', ['450', '450 m', '450m', '450 meter'], 'feedback-pesan-lis', 'pesan_lis')">Cek Jawaban</button>
+          </div>
+          <p class="feedback" id="feedback-pesan-lis" hidden></p>
+          <button class="btn-hint" style="margin-top:0.5rem;" onclick="revealHint('pesanlis', 1)">Butuh petunjuk?</button>
+          <div class="hint-level" id="pesanlis-level-1" hidden style="font-size:0.85rem; color:#64748b; margin-top:0.3rem;">💡 Petunjuk: Panjang lis untuk 1 kotak (cm) dikali 250, lalu ubah ke meter (100 cm = 1 m).</div>
+        </div>
+      </div>
+
+      <!-- TANTANGAN 2: EFISIENSI BAHAN & LUAS PERMUKAAN -->
+      <div style="background:#ffffff; border:1px solid #e2e8f0; border-radius:12px; padding:1.25rem; margin-bottom:1.5rem;">
+        <h3 style="margin-top:0; color:#1eb8b1;">Tantangan 2 — Efisiensi Bahan (Luas Permukaan)</h3>
+        <p style="font-size:0.95rem; line-height:1.5;">
+          Karton dipotong dari lembar persegi panjang, jadi pola jaring-jaring menentukan seberapa banyak karton terbuang. Gunakan Catatan Kartonmu dari Fase 3.
+        </p>
+        
+        <!-- Formulasi Rumus Luas -->
+        <div style="background:#fffbeb; border-radius:8px; padding:1rem; margin-bottom:1rem;">
+          <strong style="color:#b45309; font-size:0.95rem;">Rumus Baku Luas Permukaan ($L$)</strong>
+          <div class="answer-row" style="margin-top:0.5rem; flex-wrap:wrap; gap:0.4rem; align-items:center;">
+            <span>Rumus $L$ =</span>
+            <input type="text" id="input-rumus-luas" size="12" placeholder="contoh: 6*s*s" style="text-align:center;">
+            <button class="btn-primary" onclick="cekRumusLuas()">Verifikasi Rumus</button>
+          </div>
+          <p class="feedback" id="feedback-rumus-luas" hidden></p>
+        </div>
+
+        <!-- Kartu Kalkulasi Luas -->
+        <div class="kalkulasi-card">
+          <p class="card-title">📄 Hitung Luas Karton 1 Kotak ($s = 15$ cm)</p>
+          <input type="number" id="input-hitung-luas" placeholder="... cm²">
+          <div>
+            <button class="btn-teal-outline" onclick="cekHitungLuas()">Cek</button>
+          </div>
+          <p class="feedback" id="feedback-hitung-luas" hidden style="margin-top:1rem;"></p>
+        </div>
+        <div class="lkpd-prompt" id="rekap-karton" style="margin-top:1.5rem;"></div>
+
+        <div class="kalkulasi-card">
+          <p class="card-title">📐 Luas lembar karton yang dipotong untuk 1 kotak (pola terhematmu)</p>
+          <p style="font-size:0.85rem; color:#64748b;">💡 Luas lembar = banyak petak lembar × 225 cm² (satu petak = 15 × 15 cm).</p>
+          <input type="number" id="input-lembar" placeholder="... cm²">
+          <div><button class="btn-teal-outline" onclick="cekLembarKarton()">Cek</button></div>
+          <p class="feedback" id="feedback-lembar" hidden style="margin-top:1rem;"></p>
+        </div>
+
+        <div class="kalkulasi-card">
+          <p class="card-title">⭐ Ekstra: ♻️ Karton yang terbuang per kotak (cm²)</p>
+          <p style="font-size:0.85rem; color:#64748b;">💡 Terbuang = luas lembar dikurangi luas permukaan kotak (1.350 cm²).</p>
+          <input type="number" id="input-limbah" placeholder="... cm²">
+          <div><button class="btn-teal-outline" onclick="cekLimbahKarton()">Cek</button></div>
+          <p class="feedback" id="feedback-limbah" hidden style="margin-top:1rem;"></p>
+        </div>
+      </div>
+
+      <!-- TANTANGAN 3: KAPASITAS PRESISI & VOLUME -->
+      <div style="background:#ffffff; border:1px solid #e2e8f0; border-radius:12px; padding:1.25rem; margin-bottom:1.5rem;">
+        <h3 style="margin-top:0; color:#1eb8b1;">Tantangan 3 — Kapasitas Presisi &amp; Volume Ruang</h3>
+        <p style="font-size:0.95rem; line-height:1.5;">
+          Menentukan volume ruang dalam kotak agar bakpia tersusun rapat tanpa terguncang dan hancur di jalan.
+        </p>
+
+        <!-- Formulasi Rumus Volume -->
+        <div style="background:#fffbeb; border-radius:8px; padding:1rem; margin-bottom:1rem;">
+          <strong style="color:#b45309; font-size:0.95rem;">Rumus Baku Volume ($V$)</strong>
+          <div class="answer-row" style="margin-top:0.5rem; flex-wrap:wrap; gap:0.4rem; align-items:center;">
+            <span>Rumus $V$ =</span>
+            <input type="text" id="input-rumus-vol" size="12" placeholder="contoh: s*s*s" style="text-align:center;">
+            <button class="btn-primary" onclick="cekRumusVol()">Verifikasi Rumus</button>
+          </div>
+          <p class="feedback" id="feedback-rumus-vol" hidden></p>
+        </div>
+
+        <!-- Kartu Kalkulasi Volume -->
+        <div class="kalkulasi-card">
+          <p class="card-title">📦 Hitung Kapasitas Ruang 1 Kotak ($s = 15$ cm)</p>
+          <input type="number" id="input-hitung-vol" placeholder="... cm³">
+          <div>
+            <button class="btn-teal-outline" onclick="cekHitungVol()">Cek</button>
+          </div>
+          <p class="feedback" id="feedback-hitung-vol" hidden style="margin-top:1rem;"></p>
+        </div>
+      </div>
+
+            <!-- ANALISIS PERUBAHAN SKALA UKURAN -->
+      <div style="background:#ffffff; border:1px solid #e2e8f0; border-radius:12px; padding:1.25rem; margin-bottom:1.5rem;">
+        <h3 style="margin-top:0; color:#1eb8b1;">Kotak Jumbo: Rusuk 2× Lipat</h3>
+        <p style="font-size:0.95rem; line-height:1.5;">
+          Pak Tono ingin membuat versi jumbo dengan rusuk <strong>30 cm</strong> (dua kali lipat dari 15 cm).
+        </p>
+        <div class="lkpd-prompt" id="rekap-isi"></div>
+
+        <div style="margin-top:1.5rem;">
+          <p style="font-weight:600; margin-bottom:0.5rem;">Panjang total lis penguat menjadi berapa kali lipat?</p>
+          <div class="answer-row">
+            <input type="text" id="input-prop-lis" size="8">
+            <button class="btn-primary" onclick="checkAnswer('input-prop-lis', ['2', '2 kali', 'dua kali'], 'feedback-prop-lis', 'prop_lis')">Cek Jawaban</button>
+          </div>
+          <p class="feedback" id="feedback-prop-lis" hidden></p>
+          <button class="btn-hint" style="margin-top:0.5rem;" onclick="revealHint('proplis', 1)">Butuh petunjuk?</button>
+          <div class="hint-level" id="proplis-level-1" hidden style="font-size:0.85rem; color:#64748b; margin-top:0.3rem;">💡 Petunjuk: Panjang berubah sebanding dengan faktor skala ($2^1 = 2$).</div>
+        </div>
+
+        <div style="margin-top:1.5rem; padding-top:1.5rem; border-top:1px dashed #e2e8f0;">
+          <p style="font-weight:600; margin-bottom:0.5rem;">Berapa kapasitas 1 kotak jumbo (cm³)?</p>
+          <div class="answer-row">
+            <input type="text" id="input-jumbo-vol" size="8">
+            <button class="btn-primary" onclick="checkAnswer('input-jumbo-vol', ['27000', '27.000', '27000 cm3', '27000 cm³'], 'feedback-jumbo-vol', 'jumbo_vol')">Cek Jawaban</button>
+          </div>
+          <p class="feedback" id="feedback-jumbo-vol" hidden></p>
+          <button class="btn-hint" style="margin-top:0.5rem;" onclick="revealHint('jumbovol', 1)">Butuh petunjuk?</button>
+          <div class="hint-level" id="jumbovol-level-1" hidden style="font-size:0.85rem; color:#64748b; margin-top:0.3rem;">💡 Petunjuk: Pakai $V = s^3$ dengan $s = 30$, atau kalikan kapasitas kotak biasa dengan pola volume di catatanmu.</div>
+        </div>
+
+        <div style="margin-top:1.5rem; padding-top:1.5rem; border-top:1px dashed #e2e8f0;">
+          <p style="font-weight:600; margin-bottom:0.5rem;">⭐ Ekstra: berapa luas karton 1 kotak jumbo (cm²)?</p>
+          <div class="answer-row">
+            <input type="text" id="input-jumbo-luas" size="8">
+            <button class="btn-primary" onclick="checkAnswer('input-jumbo-luas', ['5400', '5.400', '5400 cm2', '5400 cm²'], 'feedback-jumbo-luas', 'jumbo_luas')">Cek Jawaban</button>
+          </div>
+          <p class="feedback" id="feedback-jumbo-luas" hidden></p>
+          <button class="btn-hint" style="margin-top:0.5rem;" onclick="revealHint('jumboluas', 1)">Butuh petunjuk?</button>
+          <div class="hint-level" id="jumboluas-level-1" hidden style="font-size:0.85rem; color:#64748b; margin-top:0.3rem;">💡 Petunjuk: Pakai $6 \times s^2$ dengan $s = 30$, atau kalikan luas kotak biasa (1.350 cm²) dengan pola luas di catatanmu.</div>
+        </div>
+      </div>
+
+      <!-- DRAF PROPOSAL KELOMPOK -->
+      <div style="background:#ffffff; border:1px solid #e2e8f0; border-radius:12px; padding:1.25rem; margin-bottom:2rem;">
+        <h3 style="margin-top:0; color:#1eb8b1;">Draf Proposal Solusi untuk Pak Tono</h3>
+        <p style="font-size:0.9rem; color:#64748b;">Tuliskan kesimpulan akhir kelompokmu untuk dipresentasikan dalam menjawab ke-3 tantangan Pak Tono:</p>
+        <textarea id="input-laporan-tono" placeholder="Tuliskan rekomendasi untuk Pak Tono: pesanan pelindung sudut dan lis penguat, efisiensi karton, dan kapasitas volume..." style="width:100%; min-height:100px; padding:0.8rem; border:1px solid #cbd5e1; border-radius:6px; font-family:inherit;"></textarea>
+        <button class="btn-primary" style="margin-top:0.75rem;" onclick="simpanLaporanTono()">Simpan Proposal Kelompok</button>
+        <p class="journal-status" id="status-laporan-tono" hidden></p>
+      </div>
+
+      <!-- Navigasi -->
+      <div class="step-actions">
+        <button class="btn-ghost" onclick="window.location.href='kubus-penyelidikan.html'">← Kembali ke Penyelidikan</button>
+        <button class="btn-primary" onclick="window.location.href='kubus-kuis.html'">Lanjut: Fase 5 (Evaluasi) →</button>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    function cekRumusLuas() {
+      var val = document.getElementById('input-rumus-luas').value.trim().toLowerCase().replace(/\s+/g, '');
+      var feedback = document.getElementById('feedback-rumus-luas');
+      feedback.hidden = false;
+      if (val === '6*s*s' || val === '6xsxs' || val === '6*s^2' || val === '6s^2' || val === '6s2') {
+        feedback.className = 'feedback feedback-success';
+        feedback.innerHTML = '✅ Benar! Rumus luas permukaan adalah 6 × s².';
+      } else {
+        feedback.className = 'feedback feedback-retry';
+        feedback.innerHTML = '❌ Belum tepat. Ingat: 6 sisi dikali luas satu sisi (s × s).';
+      }
+    }
+
+    function cekRumusVol() {
+      var val = document.getElementById('input-rumus-vol').value.trim().toLowerCase().replace(/\s+/g, '');
+      var feedback = document.getElementById('feedback-rumus-vol');
+      feedback.hidden = false;
+      if (val === 's*s*s' || val === 'sxsxs' || val === 's^3' || val === 's3') {
+        feedback.className = 'feedback feedback-success';
+        feedback.innerHTML = '✅ Benar! Rumus volume adalah s³.';
+      } else {
+        feedback.className = 'feedback feedback-retry';
+        feedback.innerHTML = '❌ Belum tepat. Volume diperoleh dari s × s × s.';
+      }
+    }
+
+    function cekHitungLuas() {
+      var val = document.getElementById('input-hitung-luas').value.trim();
+      var feedback = document.getElementById('feedback-hitung-luas');
+      feedback.hidden = false;
+      if (val === '1350') {
+        feedback.className = 'feedback feedback-success';
+        feedback.innerHTML = '✅ Benar! Kebutuhan karton 1 kotak adalah 1350 cm².';
+      } else {
+        feedback.className = 'feedback feedback-retry';
+        feedback.innerHTML = '❌ Kurang tepat. Hitung: 6 × (15 × 15).';
+      }
+    }
+
+    function cekHitungVol() {
+      var val = document.getElementById('input-hitung-vol').value.trim();
+      var feedback = document.getElementById('feedback-hitung-vol');
+      feedback.hidden = false;
+      if (val === '3375') {
+        feedback.className = 'feedback feedback-success';
+        feedback.innerHTML = '✅ Benar! Kapasitas volume 1 kotak adalah 3375 cm³.';
+      } else {
+        feedback.className = 'feedback feedback-retry';
+        feedback.innerHTML = '❌ Kurang tepat. Hitung: 15 × 15 × 15.';
+      }
+    }
+
+    function checkAnswer(inputId, validAnswers, feedbackId, stateKey) {
+      var val = document.getElementById(inputId).value.trim().toLowerCase();
+      var feedback = document.getElementById(feedbackId);
+      feedback.hidden = false;
+      var isCorrect = validAnswers.some(function(ans) { return val === ans.toLowerCase(); });
+
+      if (isCorrect) {
+        feedback.className = 'feedback feedback-success';
+        feedback.innerHTML = '✅ Tepat! Pemahamanmu tentang bagian ini sudah kuat.';
+        if (typeof state !== 'undefined') {
+          if (!state.answers) state.answers = {};
+          state.answers[stateKey] = val;
+          if (typeof saveState === 'function') saveState(state);
+        }
+      } else {
+        feedback.className = 'feedback feedback-retry';
+        feedback.innerHTML = '❌ Masih kurang tepat. Coba periksa kembali.';
+      }
+    }
+
+    function revealHint(prefix, level) {
+      var el = document.getElementById(prefix + '-level-' + level);
+      if (el) el.hidden = false;
+    }
+
+    function simpanLaporanTono() {
+      var text = document.getElementById('input-laporan-tono').value.trim();
+      var status = document.getElementById('status-laporan-tono');
+      if (typeof state !== 'undefined') {
+        if (!state.answers) state.answers = {};
+        state.answers['proposal_pak_tono'] = text;
+        if (typeof saveState === 'function') saveState(state);
+      }
+      if (status) {
+        status.hidden = false;
+        status.textContent = '✅ Proposal solusi untuk Pak Tono berhasil disimpan!';
+      }
+    }
+
+    function tampilkanRekapCatatan() {
+      var el = document.getElementById('rekap-catatan'); if (!el) return;
+      var c = null;
+      try { c = (JSON.parse(localStorage.getItem('pbl_kubus-penyelidikan') || '{}')).catatanPesanan; } catch (e) {}
+        el.innerHTML = (c && c.selesai)
+    ? '📋 <strong>Lembar Pesananmu:</strong> ' + Number(c.titik) + ' pelindung sudut, ' + Number(c.rusuk) + ' lis, ' + Number(c.sisi) + ' panel (untuk 1 kotak).'
+    : '📋 Lembar Pesanan masih kosong. Isi dulu di Fase 3 Bagian A.';
+    }
+    document.addEventListener('DOMContentLoaded', tampilkanRekapCatatan);
+    
+        function ambilCatatanKarton() {
+      try { return (JSON.parse(localStorage.getItem('pbl_kubus-penyelidikan') || '{}')).catatanKarton || null; } catch (e) { return null; }
+    }
+    function tampilkanRekapKarton() {
+      var el = document.getElementById('rekap-karton'); if (!el) return;
+      var c = ambilCatatanKarton();
+      if (!c) { el.textContent = '📋 Catatan karton masih kosong. Isi dulu di Fase 3 Bagian B.'; return; }
+      el.innerHTML = '📋 <strong>Catatan Karton:</strong> lembar <strong>' + Number(c.w) + ' × ' + Number(c.h) + ' petak</strong> (1 petak = 15 × 15 cm).'
+        + (Number(c.luas) > 10 ? ' Ada pola yang lebih hemat. Coba lagi di Bagian B!' : '');
+    }
+    function cekKartonCatatan(inputId, feedbackId, hitung) {
+      var c = ambilCatatanKarton(), fb = document.getElementById(feedbackId);
+      fb.hidden = false;
+      if (!c) { fb.className = 'feedback feedback-retry'; fb.textContent = 'Catatan karton masih kosong. Isi dulu di Fase 3 Bagian B.'; return; }
+      var benar = hitung(Number(c.w), Number(c.h));
+      var val = Number(document.getElementById(inputId).value);
+      if (val === benar) { fb.className = 'feedback feedback-success'; fb.innerHTML = '✅ Tepat! ' + benar + ' cm².'; }
+      else { fb.className = 'feedback feedback-retry'; fb.innerHTML = '❌ Belum tepat. Ingat: 1 petak = 225 cm².'; }
+    }
+    function cekLembarKarton() { cekKartonCatatan('input-lembar', 'feedback-lembar', function (w, h) { return w * h * 225; }); }
+    function cekLimbahKarton() { cekKartonCatatan('input-limbah', 'feedback-limbah', function (w, h) { return w * h * 225 - 1350; }); }
+    document.addEventListener('DOMContentLoaded', tampilkanRekapKarton);
+    window.cekLembarKarton = cekLembarKarton;
+    window.cekLimbahKarton = cekLimbahKarton;
+    
+    function tampilkanRekapIsi() {
+      var el = document.getElementById('rekap-isi'); if (!el) return;
+      var p = null;
+      try { p = (JSON.parse(localStorage.getItem('pbl_kubus-penyelidikan') || '{}')).proporsional || null; } catch (e) {}
+      var l = p && p['prop-simpul-luas'], v = p && p['prop-simpul-volume'];
+      el.textContent = (l && v)
+        ? '📋 Catatan Isimu: rusuk 2× → luas ' + l + '×, volume ' + v + '×. Pakai polamu untuk soal di bawah, lalu cocokkan dengan rumus!'
+        : '📋 Catatan Isi masih kosong. Isi dulu di Fase 3 Bagian C.';
+    }
+    document.addEventListener('DOMContentLoaded', tampilkanRekapIsi);
+
+    window.cekRumusLuas = cekRumusLuas;
+    window.cekRumusVol = cekRumusVol;
+    window.cekHitungLuas = cekHitungLuas;
+    window.cekHitungVol = cekHitungVol;
+    window.checkAnswer = checkAnswer;
+    window.revealHint = revealHint;
+    window.simpanLaporanTono = simpanLaporanTono;
+  </script>
+  
+  <script type="module" src="shared.js"></script>
+</body>
+</html>

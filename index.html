@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GeoCeria - Serunya Belajar Bangun Ruang</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #FF9F1C;
+            --secondary: #2EC4B6;
+            --accent: #FFBF69;
+            --background: #FDFFFC;
+            --text-dark: #011627;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Nunito', sans-serif;
+        }
+
+        body {
+            background-color: var(--background);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        nav {
+            background-color: var(--secondary);
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: 900;
+            color: white;
+            text-decoration: none;
+            letter-spacing: 2px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .hero {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 5rem 5%;
+            min-height: calc(100vh - 72px);
+            background: linear-gradient(135deg, rgba(46,196,182,0.1) 0%, rgba(255,159,28,0.1) 100%);
+        }
+
+        .hero-content {
+            max-width: 50%;
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            color: #555;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--primary);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.2rem;
+            box-shadow: 0 5px 15px rgba(255,159,28,0.4);
+            transition: transform 0.3s, background-color 0.3s;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            background-color: #f79000;
+        }
+
+        .hero-image {
+            width: 45%;
+            height: 300px;
+            background-color: var(--accent);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            background-image: <img src="Bentuk-Ruang.png" alt="Ilustrasi Bangun Ruang">
+            background-size: cover;
+            background-position: center;
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                flex-direction: column;
+                text-align: center;
+            }
+            .hero-content {
+                max-width: 100%;
+                margin-bottom: 2rem;
+            }
+            .hero-image {
+                width: 100%;
+            }
+            .nav-links {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="index.html" class="logo">GeoCeria</a>
+        <div class="nav-links">
+            <a href="index.html">Beranda</a>
+            <a href="pilih-bangun.html">Materi</a>
+            <a href="pilih-bangun.html">Tantangan Kuis</a>
+        </div>
+    </nav>
+
+    <section class="hero" id="beranda">
+        <div class="hero-content">
+            <h1>Mari Berpetualang di Dunia Ruang!</h1>
+            <p>Belajar Bangun Ruang Sisi Datar sekarang lebih mudah dan menyenangkan. Temukan masalah di sekitarmu, eksplorasi bentuknya secara interaktif, dan jadilah juara geometri!</p>
+            <a href="pilih-bangun.html" class="btn">Mulai Belajar Sekarang 🚀</a>
+        </div>
+        <div class="hero-image">
+            <!-- Tempat ilustrasi 3D -->
+        </div>
+    </section>
+
+</body>
+</html>

@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kuis Konsolidasi — Balok</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Work+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared.css">
+</head>
+<body data-module="balok-kuis">
+
+<header class="topbar">
+  <span class="brand">Jelajah Bangun Ruang</span>
+  <nav><a href="balok.html">← Kembali ke Balok</a></nav>
+</header>
+
+<div class="wrap">
+  <div style="text-align: center; margin: 2rem 0 2.5rem; padding: 0 1rem;">
+    <div style="font-size: 2.2rem; margin-bottom: 0.2rem;" aria-hidden="true">📦</div>
+    <span class="fase-badge" style="margin-bottom: 0.5rem; display: inline-block;">Kuis Formatif · Balok</span>
+    <h1 style="font-size: 1.8rem; color: var(--ink); margin: 0.4rem 0 0.5rem; font-family: var(--font-display);">Waktunya Uji Pemahaman!</h1>
+    <p style="color: var(--muted); font-size: 0.95rem; max-width: 500px; margin: 0 auto; line-height: 1.5;">Yuk, coba asah lagi logika dan bayangan ruangmu lewat tantangan santai ini. Hasilnya buat catatan belajarmu sendiri, kok!</p>
+  </div>
+
+  <div>
+    <main style="max-width: 800px; margin: 0 auto;">
+      <section class="phase" data-step="1">
+        <div class="fase-badge">Fase 5 · Kuis Formatif</div>
+
+                <h2>Soal 1 — Jaring-jaring Balok</h2>
+        <p>Kardus Bu Sari berukuran 40 × 30 × 20 cm. Perhatikan empat susunan potongan karton berikut. Warna menunjukkan ukuran: <strong style="color:#1a8f84">hijau-biru 40 × 30</strong>, <strong style="color:#d97800">oranye 40 × 20</strong>, dan <strong style="color:#4659d6">biru 30 × 20</strong>. <strong>Manakah yang TIDAK BISA dilipat menjadi kardus?</strong></p>
+        <div id="svg-q1"></div>
+
+        <div class="answer-row" style="flex-wrap:wrap; gap:.5rem;">
+          <button class="btn-ghost" onclick="jawabKuis('q1', false, 'feedback-q1', 'Coba lipat lagi di kepalamu: susunan A bisa dilipat jadi kardus dengan rapi.')">A</button>
+          <button class="btn-ghost" onclick="jawabKuis('q1', false, 'feedback-q1', 'Coba lipat lagi di kepalamu: susunan B bisa dilipat jadi kardus dengan rapi.')">B</button>
+          <button class="btn-ghost" onclick="jawabKuis('q1', true, 'feedback-q1', 'Tepat! Pada susunan C, saat dilipat ada potongan yang bertumpuk dan ada sisi kardus yang tidak tertutup.')">C</button>
+          <button class="btn-ghost" onclick="jawabKuis('q1', false, 'feedback-q1', 'Coba lipat lagi di kepalamu: susunan D bisa dilipat jadi kardus dengan rapi.')">D</button>
+        </div>
+        <p class="feedback" id="feedback-q1" hidden></p>
+
+        <div class="step-actions">
+          <span></span>
+          <button class="btn-primary" onclick="nextStep(1)">Lanjut →</button>
+        </div>
+      </section>
+
+      <section class="phase" data-step="2" hidden>
+        <h2>Soal 2 — Rotasi Mental</h2>
+        <p>Perhatikan kardus balok di bawah. Salah satu sisinya (berwarna merah) sedang menghadap ke <strong>kanan</strong>.</p>
+        <div id="svg-q2"></div>
+
+        <p><strong>Bayangkan</strong> (jangan digambar dulu): kalau kardus ini diputar 90° searah jarum jam (dilihat dari atas, seperti memutar piring), sisi merah itu akan menghadap ke arah mana?</p>
+
+        <div class="answer-row" style="flex-wrap:wrap; gap:.5rem;">
+          <button class="btn-ghost" onclick="jawabKuis('q2', true, 'feedback-q2', 'Tepat! Diputar 90° searah jarum jam (dilihat dari atas), sisi yang tadinya menghadap kanan berpindah menghadap depan, seperti jarum jam dari angka 3 ke angka 6.')">Depan</button>
+          <button class="btn-ghost" onclick="jawabKuis('q2', false, 'feedback-q2', 'Itu arah kalau diputar BERLAWANAN jarum jam. Coba bayangkan jam dilihat dari atas: posisi jam 3 (kanan) bergerak ke jam 6 (depan), bukan ke arah ini.')">Belakang</button>
+          <button class="btn-ghost" onclick="jawabKuis('q2', false, 'feedback-q2', 'Coba bayangkan jam dilihat dari atas: posisi jam 3 (kanan) bergerak ke jam 6 (depan), bukan ke arah ini.')">Kiri</button>
+          <button class="btn-ghost" onclick="jawabKuis('q2', false, 'feedback-q2', 'Rotasi searah jarum jam dilihat dari atas tidak mengubah arah atas/bawah, hanya memutar sisi depan-kanan-belakang-kiri.')">Atas</button>
+        </div>
+        <p class="feedback" id="feedback-q2" hidden></p> 
+        <div class="step-actions">
+          <button class="btn-ghost" onclick="prevStep(2)">← Kembali</button>
+          <button class="btn-primary" onclick="nextStep(2)">Lanjut →</button>
+        </div>
+      </section>
+
+      <section class="phase" data-step="3" hidden>
+        <h2>Soal 2 — Rotasi Mental</h2>
+        <p>Perhatikan kardus balok di bawah. Salah satu sisinya (berwarna merah) sedang menghadap ke <strong>kanan</strong>.</p>
+        <div id="svg-q2"></div>
+
+        <p><strong>Bayangkan</strong> (jangan digambar dulu): kalau kardus ini diputar 90° searah jarum jam (dilihat dari atas, seperti memutar piring), sisi merah itu akan menghadap ke arah mana?</p>
+
+        <div class="answer-row" style="flex-wrap:wrap; gap:.5rem;">
+          <button class="btn-ghost" onclick="jawabKuis('q2', true, 'feedback-q2', 'Tepat! Diputar 90° searah jarum jam (dilihat dari atas), sisi yang tadinya menghadap kanan berpindah menghadap depan, seperti jarum jam dari angka 3 ke angka 6.')">Depan</button>
+          <button class="btn-ghost" onclick="jawabKuis('q2', false, 'feedback-q2', 'Itu arah kalau diputar BERLAWANAN jarum jam. Coba bayangkan jam dilihat dari atas: posisi jam 3 (kanan) bergerak ke jam 6 (depan), bukan ke arah ini.')">Belakang</button>
+          <button class="btn-ghost" onclick="jawabKuis('q2', false, 'feedback-q2', 'Coba bayangkan jam dilihat dari atas: posisi jam 3 (kanan) bergerak ke jam 6 (depan), bukan ke arah ini.')">Kiri</button>
+          <button class="btn-ghost" onclick="jawabKuis('q2', false, 'feedback-q2', 'Rotasi searah jarum jam dilihat dari atas tidak mengubah arah atas/bawah, hanya memutar sisi depan-kanan-belakang-kiri.')">Atas</button>
+        </div>
+        <p class="feedback" id="feedback-q2" hidden></p>
+
+        <div class="step-actions">
+          <button class="btn-ghost" onclick="prevStep(3)">← Kembali</button>
+          <button class="btn-primary" onclick="nextStep(3)">Lanjut →</button>
+        </div>
+      </section>
+
+      <section class="phase" data-step="4" hidden>
+                <h2>Soal 4 — Penampang Balok</h2>
+        <p>Perhatikan balok di bawah. Bagian yang diarsir adalah <strong>bidang potong</strong> yang melewati 2 rusuk tegak yang saling berhadapan secara diagonal.</p>
+        <div id="svg-q4"></div>
+
+        <p>Kalau balok ini benar-benar dipotong tepat mengikuti bidang berwarna itu, <strong>bentuk penampang (bekas potongan)</strong>-nya adalah...?</p>
+
+        <div class="answer-row" style="flex-wrap:wrap; gap:.5rem;">
+          <button class="btn-ghost" onclick="jawabKuis('q4', false, 'feedback-q4', 'Coba amati lagi bentuk bidang yang diarsir pada gambar — itu bukan segitiga.')">Segitiga</button>
+          <button class="btn-ghost" onclick="jawabKuis('q4', false, 'feedback-q4', 'Coba amati lagi bentuk bidang yang diarsir — tinggi balok tidak sama dengan panjang diagonal alasnya, jadi bukan persegi.')">Persegi</button>
+          <button class="btn-ghost" onclick="jawabKuis('q4', true, 'feedback-q4', 'Tepat! Bidang yang melewati 2 rusuk tegak berhadapan membentuk penampang persegi panjang (dua sisinya setinggi rusuk tegak, dua sisinya sepanjang diagonal alas).')">Persegi panjang</button>
+          <button class="btn-ghost" onclick="jawabKuis('q4', false, 'feedback-q4', 'Coba amati lagi — bidang potong ini cuma melewati 4 titik sudut, bukan 6, jadi bentuknya bukan segi enam.')">Segi enam</button>
+        </div>
+        <p class="feedback" id="feedback-q4" hidden></p>
+
+        <div class="step-actions">
+          <button class="btn-ghost" onclick="prevStep(4)">← Kembali</button>
+          <button class="btn-primary" onclick="nextStep(4)">Lanjut →</button>
+        </div>
+      </section>
+
+      <section class="phase" data-step="5" hidden>
+        <h2>Soal 5 — Merakit Jaring-jaring</h2>
+        <p>Perhatikan jaring-jaring balok berikut, tiap potongan diberi nomor 1 sampai 6 mengikuti alurnya.</p>
+        <div id="svg-q5"></div>
+
+        <p>Kalau jaring-jaring ini dilipat menjadi balok, sisi bernomor <strong>1</strong> akan menjadi sisi yang <strong>berhadapan</strong> (berlawanan arah) dengan sisi bernomor berapa?</p>
+
+        <div class="answer-row" style="flex-wrap:wrap; gap:.5rem;">
+          <button class="btn-ghost" onclick="jawabKuis('q5', false, 'feedback-q5', 'Coba perhatikan ukurannya: sisi yang berhadapan pada balok pasti sama besar, sedangkan sisi 2 berukuran berbeda dari sisi 1.')">2</button>
+          <button class="btn-ghost" onclick="jawabKuis('q5', false, 'feedback-q5', 'Coba perhatikan ukurannya: sisi yang berhadapan pada balok pasti sama besar, sedangkan sisi 3 berukuran berbeda dari sisi 1.')">3</button>
+          <button class="btn-ghost" onclick="jawabKuis('q5', true, 'feedback-q5', 'Tepat! Sisi yang berhadapan pada balok sama besar. Sisi 1 berukuran 30 × 20, dan satu-satunya sisi lain yang berukuran sama adalah nomor 4.')">4</button>
+          <button class="btn-ghost" onclick="jawabKuis('q5', false, 'feedback-q5', 'Coba perhatikan ukurannya: sisi yang berhadapan pada balok pasti sama besar, sedangkan sisi 5 berukuran berbeda dari sisi 1.')">5</button>
+        </div>
+        <p class="feedback" id="feedback-q5" hidden></p>
+
+        <div class="step-actions">
+          <button class="btn-ghost" onclick="prevStep(5)">← Kembali</button>
+          <button class="btn-primary" onclick="nextStep(5)">Lanjut →</button>
+        </div>
+      </section>
+
+      <section class="phase" data-step="6" hidden>
+      <h2>Soal 6 — Orientasi Spasial (Sudut Pandang)</h2>
+      <p>Denah gudang Bu Sari dilihat dari atas (Utara di atas). Ada tiga tumpukan kardus: <strong style="color:#dc2626">Merah</strong> di Utara, <strong style="color:#2563eb">Biru</strong> di Timur, dan <strong style="color:#16a34a">Hijau</strong> di Selatan. Bu Sari berdiri di tengah, menghadap tumpukan Biru.</p>
+      <svg viewBox="0 0 220 190" style="width:100%; max-width:260px; display:block; margin:1rem auto;">
+        <text x="110" y="12" text-anchor="middle" font-size="11" fill="var(--muted)">U ↑</text>
+        <rect x="20" y="18" width="180" height="160" fill="var(--warn-bg)" stroke="var(--primary)" stroke-width="1.5"/>
+        <rect x="92" y="24" width="36" height="24" fill="#dc2626" fill-opacity=".8"/>
+        <text x="110" y="40" text-anchor="middle" font-size="10" fill="#fff" font-weight="700">Merah</text>
+        <rect x="158" y="86" width="36" height="24" fill="#2563eb" fill-opacity=".8"/>
+        <text x="176" y="102" text-anchor="middle" font-size="10" fill="#fff" font-weight="700">Biru</text>
+        <rect x="92" y="148" width="36" height="24" fill="#16a34a" fill-opacity=".8"/>
+        <text x="110" y="164" text-anchor="middle" font-size="10" fill="#fff" font-weight="700">Hijau</text>
+        <circle cx="110" cy="98" r="9" fill="var(--accent-dark)"/>
+        <line x1="119" y1="98" x2="146" y2="98" stroke="var(--accent-dark)" stroke-width="3"/>
+        <polygon points="146,92 156,98 146,104" fill="var(--accent-dark)"/>
+        <text x="110" y="124" text-anchor="middle" font-size="9" fill="var(--muted)">Bu Sari</text>
+      </svg>
+      <p>Bu Sari lalu berbalik <strong>90° ke kiri</strong>. Sekarang tumpukan <strong>Hijau</strong> berada di sebelah ... Bu Sari?</p>
+      <div class="answer-row" style="flex-wrap:wrap; gap:.5rem;">
+        <button class="btn-ghost" onclick="jawabKuis('q6', false, 'feedback-q6', 'Coba bayangkan dirimu menjadi Bu Sari: setelah berbalik ke kiri, ia menghadap Utara (Merah). Hijau ada di Selatan, jadi bukan di depannya.')">Depan</button>
+        <button class="btn-ghost" onclick="jawabKuis('q6', true, 'feedback-q6', 'Tepat! Berbalik 90° ke kiri dari Timur, Bu Sari menghadap Utara. Selatan (Hijau) kini persis di belakangnya.')">Belakang</button>
+        <button class="btn-ghost" onclick="jawabKuis('q6', false, 'feedback-q6', 'Coba pikirkan arah hadapnya dulu: setelah berbalik ke kiri ia menghadap Utara. Kiri-kanannya adalah Barat-Timur, sedangkan Hijau di Selatan.')">Kiri</button>
+        <button class="btn-ghost" onclick="jawabKuis('q6', false, 'feedback-q6', 'Coba pikirkan arah hadapnya dulu: setelah berbalik ke kiri ia menghadap Utara. Kanannya adalah Timur (Biru), bukan Selatan.')">Kanan</button>
+      </div>
+        <p class="feedback" id="feedback-q6" hidden></p>
+
+        <div class="step-actions">
+          <button class="btn-ghost" onclick="prevStep(6)">← Kembali</button>
+          <button class="btn-primary" onclick="nextStep(6)">Lanjut →</button>
+        </div>
+      </section>
+
+      <section class="phase" data-step="7" hidden>
+                <h2>Soal 7 — Perbandingan Proporsional</h2>
+        <p>Sebuah balok mainan diperbesar sehingga <strong>panjang, lebar, dan tingginya masing-masing menjadi tiga kali lipat</strong>. Luas permukaannya menjadi berapa kali lipat dari semula? Volumenya menjadi berapa kali lipat?</p>
+
+        <div class="answer-row">
+          <label for="input-q7-luas">Luas permukaan menjadi berapa kali lipat:</label>
+          <input type="text" id="input-q7-luas" size="4">
+          <button class="btn-primary" onclick="checkAnswer('input-q7-luas', ['9'], 'feedback-q7-luas', 'q7luas', null, 'Belum tepat — coba pakai balok contoh 2 × 1 × 1 cm dibanding 6 × 3 × 3 cm (semua ukuran tiga kali lipat), lalu bandingkan luasnya.'); catatSkorNumerik('input-q7-luas', ['9'], 'q7-luas')">Cek Jawaban</button>
+        </div>
+        <p class="feedback" id="feedback-q7-luas" hidden></p>
+        <button class="btn-hint" onclick="revealHint('q7luas', 1)">Butuh petunjuk?</button>
+        <div class="hint-level" id="q7luas-level-1" hidden>Petunjuk 1: coba pakai contoh angka, misal balok 2 × 1 × 1 cm diperbesar jadi 6 × 3 × 3 cm.</div>
+        <div class="hint-level" id="q7luas-level-2" hidden>Petunjuk 2: luas balok 2 × 1 × 1 = 2 × (2 + 2 + 1) = 10 cm². Luas balok 6 × 3 × 3 = 2 × (18 + 18 + 9) = 90 cm². 90 ÷ 10 = 9. Jadi luas menjadi 9 kali lipat.</div>
+
+        <div class="answer-row" style="margin-top:1rem;">
+          <label for="input-q7-volume">Volume menjadi berapa kali lipat:</label>
+          <input type="text" id="input-q7-volume" size="4">
+          <button class="btn-primary" onclick="checkAnswer('input-q7-volume', ['27'], 'feedback-q7-volume', 'q7volume', null, 'Belum tepat — coba pakai angka contoh yang sama seperti soal luas tadi, lalu bandingkan volumenya.'); catatSkorNumerik('input-q7-volume', ['27'], 'q7-volume')">Cek Jawaban</button>
+        </div>
+        <p class="feedback" id="feedback-q7-volume" hidden></p>
+        <button class="btn-hint" onclick="revealHint('q7volume', 1)">Butuh petunjuk?</button>
+        <div class="hint-level" id="q7volume-level-1" hidden>Petunjuk 1: volume balok 2 × 1 × 1 = 2 cm³.</div>
+        <div class="hint-level" id="q7volume-level-2" hidden>Petunjuk 2: volume balok 6 × 3 × 3 = 54 cm³. 54 ÷ 2 = 27. Jadi volume menjadi 27 kali lipat.</div>
+
+        <div class="step-actions">
+          <button class="btn-ghost" onclick="prevStep(7)">← Kembali</button>
+          <button class="btn-primary" onclick="hitungSkor(); goToStep(8);">Lihat Skor Akhir →</button>
+        </div>
+      </section>
+
+      <section class="phase" data-step="8" hidden>
+        <div class="fase-badge">Fase 5 · Analisis & Evaluasi</div>
+        <h2>Skor & Refleksi Akhir</h2>
+        
+        <div style="background:var(--success-bg); border-left:4px solid var(--secondary); padding:1rem; margin-bottom:1.5rem; border-radius:0 var(--radius-sm) var(--radius-sm) 0;">
+          <p id="skor-kuis" style="font-size:1.2rem; font-weight:700; color:var(--secondary-dark); margin:0;"></p>
+          <p style="margin:.4rem 0 0; font-size:.95rem; color:var(--muted);">Ingat, ini kuis formatif — hasilnya untuk membantu kamu melihat bagian mana yang masih perlu dilatih lagi, bukan nilai resmi.</p>
+        </div>
+
+        <hr style="border:none;border-top:2px solid var(--border);margin:2rem 0;">
+
+        <h3>Jurnal Refleksi (Fase 5)</h3>
+        <p id="effort-note" class="effort-note"></p>
+        <p>Setelah melewati seluruh proses: mulai dari membongkar jaring-jaring, menyusun potongan karton, hingga menghitung luas dan volume kardus. Bagian mana yang paling menarik buatmu? Apa kesulitan terbesarmu dan bagaimana kamu memecahkannya?</p>
+        <textarea id="journal-text" placeholder="Ceritakan pengalaman belajarmu di sini..." style="min-height:80px;"></textarea>
+
+        <div class="step-actions" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+          <button class="btn-ghost" onclick="prevStep(8)">← Fase Sebelumnya</button>
+          <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center;">
+            <button class="btn-primary" onclick="saveJournal('journal-text')">Simpan Refleksi</button>
+            <a class="btn-primary" href="pilih-bangun.html" style="text-decoration:none; display:inline-block; background-color: var(--secondary);">Selesai — Kembali ke Menu →</a>
+          </div>
+        </div>
+        <p class="journal-status" id="journal-status" hidden></p>
+      </section>
+    </main>
+  </div>
+</div>
+
+<script>
+  var currentStorage = localStorage.getItem('pbl_balok-kuis');
+if (currentStorage) {
+  try {
+    var parsed = JSON.parse(currentStorage);
+    parsed.step = 1;
+    parsed.quizAnswers = {};   // skor dimulai dari nol setiap kuis dibuka
+    parsed.attempts = 0;       // hitungan percobaan dimulai dari nol
+    parsed.wrongAttempts = {}; // hitungan salah untuk petunjuk ikut di-reset
+    localStorage.setItem('pbl_balok-kuis', JSON.stringify(parsed));
+  } catch(e) {}
+}
+</script>
+
+<script>
+  /* ===== Gambar kuis balok ===== */
+  var DATA_KUIS = {
+    A: [[2,7,6,9],[6,4,8,7],[2,9,6,12],[6,0,8,4],[2,4,6,7],[0,4,2,7]],
+    B: [[2,5,6,7],[6,2,8,5],[2,7,6,10],[2,2,6,5],[2,0,6,2],[0,2,2,5]],
+    C: [[4,5,8,7],[4,7,8,10],[4,2,8,5],[4,0,8,2],[2,2,4,5],[0,2,2,5]],
+    D: [[2,7,6,9],[6,4,8,7],[6,0,8,4],[2,4,6,7],[0,4,2,7],[8,4,12,7]]
+  };
+  var RANTAI_KUIS = [[0,5,3,7],[3,5,7,7],[3,2,7,5],[7,2,9,5],[9,2,13,5],[9,0,13,2]];
+  var WARNA_KUIS = { '4x3': '#2EC4B6', '4x2': '#FF9F1C', '3x2': '#5C7CFA' };
+
+  function warnaPetak(r) { var w = r[2] - r[0], h = r[3] - r[1]; return WARNA_KUIS[Math.max(w, h) + 'x' + Math.min(w, h)]; }
+
+  function svgJaring(rects, cell, label, nomor) {
+    var minX = Math.min.apply(null, rects.map(function (r) { return r[0]; })), minY = Math.min.apply(null, rects.map(function (r) { return r[1]; }));
+    var w = (Math.max.apply(null, rects.map(function (r) { return r[2]; })) - minX) * cell, h = (Math.max.apply(null, rects.map(function (r) { return r[3]; })) - minY) * cell;
+    var s = '<svg viewBox="0 0 ' + (w + 4) + ' ' + (h + (label ? 30 : 4)) + '" style="width:' + (w + 4) + 'px; max-width:100%; display:block;">';
+    rects.forEach(function (r, i) {
+      s += '<rect x="' + (2 + (r[0] - minX) * cell) + '" y="' + (2 + (r[1] - minY) * cell) + '" width="' + ((r[2] - r[0]) * cell) + '" height="' + ((r[3] - r[1]) * cell) + '" fill="' + warnaPetak(r) + '" stroke="#0b3d38" stroke-width="1.5"/>';
+      if (nomor) s += '<text x="' + (2 + ((r[0] + r[2]) / 2 - minX) * cell) + '" y="' + (2 + ((r[1] + r[3]) / 2 - minY) * cell + 5) + '" text-anchor="middle" font-size="15" font-weight="800" fill="#011627" font-family="sans-serif">' + (i + 1) + '</text>';
+    });
+    if (label) s += '<text x="' + (w / 2 + 2) + '" y="' + (h + 24) + '" text-anchor="middle" font-family="var(--font-mono)" font-weight="600" font-size="16" fill="var(--primary)">' + label + '</text>';
+    return s + '</svg>';
+  }
+
+  // Balok 4 : 3 : 2 dilihat dari depan-kanan-atas. opsi.merah = true: sisi kanan merah. opsi.potong = true: bidang potong diagonal.
+  function svgBalok(opsi) {
+    var a = 18, b = 9, c = 19, gx = 4, gy = 3, gz = 2, ox = 84, oy = 63;
+    function P(x, y, z) { return (ox + (x - y) * a) + ',' + (oy + (x + y) * b - z * c); }
+    function poly(pts, fill, stroke) { return '<polygon points="' + pts.map(function (q) { return P(q[0], q[1], q[2]); }).join(' ') + '" fill="' + fill + '" stroke="' + stroke + '" stroke-width="2" stroke-linejoin="round"/>'; }
+    function sisi(p, q, putus) { var u = P(p[0], p[1], p[2]).split(','), v = P(q[0], q[1], q[2]).split(','); return '<line x1="' + u[0] + '" y1="' + u[1] + '" x2="' + v[0] + '" y2="' + v[1] + '" stroke="#197269" stroke-width="2"' + (putus ? ' stroke-dasharray="4,3"' : '') + '/>'; }
+    function teks(x, y, z, t, warna) { var q = P(x, y, z).split(','); return '<text x="' + q[0] + '" y="' + (Number(q[1]) + 3) + '" text-anchor="middle" font-size="9" font-weight="800" fill="' + warna + '" font-family="sans-serif">' + t + '</text>'; }
+    var s = '<svg viewBox="0 0 200 150" style="width:100%; max-width:260px; display:block; margin:1rem auto;">';
+    s += sisi([0, 0, 0], [gx, 0, 0], true) + sisi([0, 0, 0], [0, gy, 0], true) + sisi([0, 0, 0], [0, 0, gz], true);
+    s += poly([[0, gy, 0], [gx, gy, 0], [gx, gy, gz], [0, gy, gz]], 'rgba(46,196,182,0.18)', '#197269');
+    s += poly([[gx, 0, 0], [gx, gy, 0], [gx, gy, gz], [gx, 0, gz]], opsi.merah ? '#dc2626' : 'rgba(46,196,182,0.28)', '#197269');
+    s += poly([[0, 0, gz], [gx, 0, gz], [gx, gy, gz], [0, gy, gz]], 'rgba(46,196,182,0.10)', '#197269');
+    if (opsi.potong) s += poly([[0, 0, 0], [gx, gy, 0], [gx, gy, gz], [0, 0, gz]], 'rgba(255,159,28,0.55)', '#FF9F1C');
+    if (opsi.merah) { s += teks(gx / 2, gy, gz / 2, 'DEPAN', '#011627') + teks(gx, gy / 2, gz / 2, 'KANAN', '#ffffff'); }
+    return s + '</svg>';
+  }
+
+  function siapkanKuis() {
+    var q1 = document.getElementById('svg-q1');
+    if (q1) q1.innerHTML = '<div style="display:flex; flex-wrap:wrap; gap:1.2rem 1.6rem; justify-content:center; margin:1rem 0;">' +
+      ['A', 'B', 'C', 'D'].map(function (k) { return '<div>' + svgJaring(DATA_KUIS[k], 13, k, false) + '</div>'; }).join('') + '</div>';
+    var q2 = document.getElementById('svg-q2'); if (q2) q2.innerHTML = svgBalok({ merah: true });
+    var q4 = document.getElementById('svg-q4'); if (q4) q4.innerHTML = svgBalok({ potong: true });
+    var q5 = document.getElementById('svg-q5'); if (q5) q5.innerHTML = '<div style="display:flex; justify-content:center; margin:1rem 0;">' + svgJaring(RANTAI_KUIS, 20, '', true) + '</div>';
+  }
+  document.addEventListener('DOMContentLoaded', siapkanKuis);
+
+   function jawabKuis(qId, benar, feedbackId, pesan) {
+    if (!state.quizAnswers) state.quizAnswers = {};
+    if (state.quizAnswers[qId] === undefined) state.quizAnswers[qId] = benar;
+    saveState(state);
+    var feedback = document.getElementById(feedbackId);
+    if (feedback) {
+      feedback.hidden = false;
+      feedback.className = benar ? 'feedback feedback-success' : 'feedback feedback-retry';
+      feedback.textContent = pesan;
+    }
+  }
+
+  function catatSkorNumerik(inputId, correctValues, qId) {
+    var input = document.getElementById(inputId);
+    if (!input) return;
+    var userAnswer = input.value.trim().toLowerCase();
+    var isCorrect = correctValues.map(function (v) { return v.toLowerCase(); }).indexOf(userAnswer) !== -1;
+    if (!state.quizAnswers) state.quizAnswers = {};
+    if (state.quizAnswers[qId] === undefined) state.quizAnswers[qId] = isCorrect;
+    saveState(state);
+  }
+
+  function hitungSkor() {
+    var qa = state.quizAnswers || {};
+    var totalBenar = 0;
+    ['q1', 'q2', 'q3', 'q4', 'q5', 'q6'].forEach(function (k) {
+      if (qa[k] === true) totalBenar++;
+    });
+    if (qa['q7-luas'] === true && qa['q7-volume'] === true) totalBenar++;
+    var el = document.getElementById('skor-kuis');
+    if (el) el.textContent = 'Skor kamu: ' + totalBenar + ' dari 7 soal terjawab benar.';
+    state.completed = true;
+    saveState(state);
+  }
+  </script>
+  <script type="module" src="shared.js"></script>
+</body>
+</html>

@@ -1,0 +1,1774 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kubus · Penyelidikan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Work+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared.css">
+</head>
+<body data-module="kubus-penyelidikan">
+
+<header class="topbar">
+  <span class="brand">Jelajah Bangun Ruang</span>
+  <nav><a href="kubus.html">← Menu Kubus</a></nav>
+</header>
+
+<div class="wrap">
+  <section class="phase" data-step="1">
+    <div class="fase-badge">Fase 3 · Penyelidikan</div>
+    
+    <!-- Pembungkus ajaib agar layout proporsional dan tidak melar -->
+    <div style="max-width: 800px; margin: 0 auto;">
+
+    <!-- Bagian A: Penyelidikan Unsur & Kekuatan Rangka -->
+<h2>Bagian A — Kerangka &amp; Kekuatan Kotak Bakpia</h2>
+<p>Bantu Pak Tono mengisi <strong>Lembar Pesanan</strong>: berapa pelindung sudut, lis, dan panel sisi untuk satu kotak?</p>
+<!-- GeoGebra 3D Unsur -->
+<p id="callback-prediksi-unsur" style="font-style:italic; color:var(--muted); border-left:3px solid var(--primary); padding-left:.75rem; margin:1rem 0;"></p>
+<h3>Aktivitas 1: Menghitung 3 Unsur Penyangga Kotak</h3>
+<p>Pilih mode, lalu <strong>klik</strong> bagian kerangka. Putar kerangkanya untuk menemukan bagian yang tersembunyi!</p>
+<div role="group" aria-label="Mode inventaris" style="display:flex; gap:.5rem; flex-wrap:wrap; margin:.5rem 0;">
+  <button class="btn-primary" id="mode-titik" onclick="setModeUnsur('titik')">📍 Titik sudut</button>
+  <button class="btn-ghost" id="mode-rusuk" onclick="setModeUnsur('rusuk')">📏 Rusuk</button>
+  <button class="btn-ghost" id="mode-sisi" onclick="setModeUnsur('sisi')">⬜ Sisi</button>
+  <button class="btn-ghost" id="btn-tampilan" onclick="toggleTampilan()">👁 Tampilan: Padat</button>
+  <button class="btn-ghost" onclick="resetInventaris()">↺ Ulangi</button>
+</div>
+<div class="ggb-frame"><div id="ggb-cube"></div></div>
+<p id="identifikasi-info" role="status" aria-live="polite" style="font-family:var(--font-mono); font-size:.9rem; color:var(--primary); font-weight:600; min-height:1.5em;"></p>
+<p style="font-family:var(--font-mono); font-size:.9rem;">Terpasang → Pelindung sudut: <b id="cnt-titik">0</b> · Lis: <b id="cnt-rusuk">0</b> · Panel sisi: <b id="cnt-sisi">0</b></p>
+
+<div class="lkpd-prompt">
+  <strong>📝 Lembar Pesanan Kemasan: Bagian Rangka (untuk 1 kotak)</strong>
+  <div class="answer-row">
+    <label>Pelindung sudut <input type="text" id="cp-titik" size="3" inputmode="numeric"> buah</label>
+    <label>Lis penguat <input type="text" id="cp-rusuk" size="3" inputmode="numeric"> batang</label>
+    <label>Panel sisi <input type="text" id="cp-sisi" size="3" inputmode="numeric"> lembar</label>
+  </div>
+  <button class="btn-primary" onclick="cekCatatanPesanan()">Cek &amp; Simpan Catatan</button>
+  <p class="feedback" id="feedback-catatan" hidden></p>
+</div>
+
+<div id="kotak-jenis-rusuk" hidden style="margin:1rem 0;">
+  <p><strong>Saat ditumpuk di truk, rusuk mana yang paling menahan beban?</strong> Sorot tiap kelompok rusuk:</p>
+  <div style="display:flex; gap:.5rem; flex-wrap:wrap;">
+    <button class="btn-ghost" onclick="sorotJenisRusuk('tegak')">Rusuk tegak</button>
+    <button class="btn-ghost" onclick="sorotJenisRusuk('atas')">Mendatar atas</button>
+    <button class="btn-ghost" onclick="sorotJenisRusuk('bawah')">Mendatar bawah</button>
+  </div>
+  <p id="info-jenis-rusuk" class="hint-level" style="min-height:1.5em;"></p>
+</div>
+<hr style="border:none;border-top:1px solid var(--border);margin:2rem 0;">
+
+<!-- Aktivitas 2: Tantangan Rotasi Mental Visual -->
+<h3>Aktivitas 2: Tantangan Rotasi Mental </h3>
+<p>Saat dimuat ke truk, kotak bakpia diputar dan digulingkan petugas, padahal <strong>logo oranye</strong>-nya harus tetap terbaca. Bayangkan perputarannya di kepalamu, lalu tentukan ke mana logo akhirnya menghadap!</p>
+<p id="rot-level-info" style="text-align:center; font-family:var(--font-mono); font-weight:700; color:var(--accent-dark);"></p>
+<div id="rot-gambar" style="text-align:center; max-width:280px; margin:0 auto;"></div>
+<p style="text-align:center; font-size:.85rem; color:var(--muted); margin:.25rem auto 0;">Kubus dilihat dari depan-kanan-atas. Garis putus-putus = rusuk di balik kubus.</p>
+<p id="rot-soal" style="font-weight:700; text-align:center; max-width:520px; margin:1rem auto;"></p>
+<div id="rot-opsi" role="group" aria-labelledby="rot-soal" style="display:flex; gap:.5rem; flex-wrap:wrap; justify-content:center; margin-bottom:1rem;"></div>
+<p class="feedback" id="feedback-rotasi-visual" role="status" aria-live="polite" hidden style="max-width:520px; margin:0 auto .75rem; text-align:center;"></p>
+<div style="text-align:center; display:flex; gap:.5rem; justify-content:center; flex-wrap:wrap;">
+  <button class="btn-ghost" id="btn-verifikasi-rotasi" hidden onclick="verifikasiRotasi()">🔄 Lihat Buktinya (Putar Kotak)</button>
+  <button class="btn-primary" id="btn-rot-lanjut" hidden onclick="rotLanjut()">Lanjut ke Level Berikutnya →</button>
+  <button class="btn-primary" id="btn-rot-ulang" hidden onclick="rotUlang()">🔁 Ulangi dari Level 1 (soal baru)</button>
+</div>
+
+<div id="kotak-verifikasi-rot" hidden style="max-width:560px; margin:1rem auto;">
+  <div class="ggb-frame"><div id="ggb-rotasi"></div></div>
+  <input type="range" id="slider-rot" min="0" max="100" value="0" oninput="aturRot(this.value)" aria-label="Putar kotak" style="width:100%;">
+  <div style="display:flex; gap:.5rem; justify-content:center; margin:.5rem 0;">
+    <button class="btn-primary" onclick="animasiRot(100)">▶ Putar</button>
+    <button class="btn-ghost" onclick="animasiRot(0)">↺ Kembali</button>
+  </div>
+  <p id="info-rot" class="hint-level" role="status" aria-live="polite"></p>
+</div>
+
+<hr style="border:none;border-top:1px solid var(--border);margin:2rem 0;">
+
+<h3>Aktivitas 3: Menghitung Kerangka Lis Penguat Rusuk</h3>
+<p>Untuk memastikan kotak kemasan tidak penyok saat ditumpuk di dalam truk pengiriman, Pak Tono harus memesan batang lis penguat baja yang dipasang di setiap rusuknya. Berdasarkan kerangka di bawah yang penuh garis pengecoh, mari selidiki dan temukan <strong>12 rusuk utama kubus</strong> sebagai dasar perhitungan panjang total lis!</p>
+<p>Putar kerangka ini perlahan dan temukan 12 rusuk penyangga utamanya!</p>
+
+<div class="ggb-frame"><div id="ggb-kamuflase" style="height: 400px;"></div></div>
+<div class="answer-row" id="area-tombol-kamuflase" style="margin-top: 1rem; align-items: stretch; flex-direction: column;">
+  <p style="margin:0 0 .5rem; font-weight:600;" id="teks-tanya-kamuflase">Apakah kamu sudah berhasil menemukan kerangka kubusnya?</p>
+  <div style="display:flex; gap:.5rem; flex-wrap:wrap;" id="grup-tombol-kamuflase">
+    <button class="btn-primary" onclick="mulaiModeSeleksi()">Sudah, Saya Menemukannya!</button>
+    <button class="btn-ghost" onclick="menyerahKamuflase()">Beri Petunjuk</button>
+  </div>
+  <p id="status-pencarian" style="font-family:var(--font-mono); font-size:1.1rem; color:var(--accent-dark); font-weight:600; margin-top:.75rem;" hidden></p>
+  <p class="feedback" id="feedback-persepsi" hidden></p>
+</div>
+
+<!-- KARTU CHECK-POINT 1 -->
+<div style="background:var(--warn-bg); border:2px dashed var(--accent); border-radius:var(--radius); padding:1.25rem; margin:2.5rem 0 2rem; text-align:center;">
+  <h4 style="margin:0 0 .4rem; color:var(--accent-dark); font-size:1.1rem;">📍 Check-Point 1: Diskusi Rangka Kelompok</h4>
+  <p style="margin:0 0 .8rem; font-size:0.9rem; color:var(--muted);">
+    Pastikan kamu dan kelompokmu sudah sepakat mengenai jumlah titik sudut (8) dan rusuk (12) pada kerangka kotak Pak Tono sebelum membuka Bagian B!
+  </p>
+  <button class="btn-primary" id="btn-cp1" onclick="bukaCheckPoint1()" style="white-space: nowrap;">🔓 Selesaikan Check-Point 1</button>
+  <p id="status-cp1" hidden style="color:var(--secondary); font-weight:700; margin-top:.5rem; font-size:0.9rem;">
+    ✅ Check-Point 1 Selesai! Bagian B di bawah sudah terbuka.
+  </p>
+</div>
+
+<hr style="border:none;border-top:2px solid var(--border);margin:2.5rem 0;">
+
+<!-- WAPPER BAGIAN B (TERKUNCI SECARA DEFAULT) -->
+<div id="bagian-b-wrapper" style="opacity: 0.35; pointer-events: none; filter: grayscale(90%); transition: all 0.5s ease;">
+  <h2 id="bagian-b-title">Bagian B — Bongkar Karton Kemasan Bakpia</h2>
+  <p>Bantu Pak Tono membongkar kotak bakpia menjadi jaring-jaring kertas karton datar. Perhatikan: 6 sisi persegi tetap sama besar, hanya susunannya yang berubah.</p>
+
+  <div class="answer-row" style="flex-direction:column; align-items:stretch;">
+    <label for="input-prediksi-jaring">Sebelum melihat animasinya, coba tebak dulu: kalau kotak ini dibongkar, jaring-jaringnya akan berbentuk seperti apa?</label>
+    <textarea id="input-prediksi-jaring" placeholder="Tidak ada jawaban salah di sini — ini cuma dugaan awalmu." style="min-height:50px;"></textarea>
+    <button class="btn-ghost" style="margin-top:.5rem; align-self:flex-start;" onclick="simpanPrediksi('luasjaring-bentuk','input-prediksi-jaring'); tampilkanCallback('luasjaring-bentuk','callback-prediksi-luasjaring')">Simpan Dugaan</button>
+  </div>
+  <p id="callback-prediksi-luasjaring" style="font-style:italic; color:var(--muted); border-left:3px solid var(--primary); padding-left:.75rem; margin:1rem 0;"></p>
+
+  <div class="ggb-frame"><div id="ggb-net"></div></div>
+  <p style="font-family:var(--font-mono); font-size:.85rem; color:var(--muted); margin-top:-.5rem;">Setiap potongan (sisi) punya luas yang sama: sisi × sisi.</p>
+  <div style="display:flex; flex-wrap:wrap; gap:.75rem; margin:.5rem 0 1rem;">
+    <button class="btn-ghost" onclick="muatJaringKubus()">Muat ulang</button>
+    <button class="btn-primary" onclick="putarOtomatis()">▶ / ⏸ Putar Otomatis</button>
+  </div>
+
+  <hr style="border:none;border-top:1px solid var(--border);margin:2rem 0;">
+
+  <h3>Tantangan 2 (Penyelidikan) — Menemukan Pola Karton Paling Efisien untuk Pak Tono</h3>
+  <p>Karton dipotong dari <strong>lembar persegi panjang</strong>. Ada <strong>11 pola</strong> jaring-jaring kubus. Rancang polanya di papan, lalu cari pola yang membuang karton <strong>paling sedikit</strong>!</p>
+  <div id="grid-jaring" style="display: grid; grid-template-columns: repeat(5, 45px); gap: 4px; justify-content: center; margin: 1.5rem 0;"></div>
+  <div class="answer-row" style="justify-content: center; flex-direction: column; align-items: center;">
+    <p id="status-kotak" style="font-family:var(--font-mono); font-size:.9rem; color:var(--muted); margin: 0 0 .5rem;">Kotak terpilih: 0 / 6</p>
+    <div style="display: flex; gap: .5rem;">
+      <button class="btn-ghost" onclick="resetGrid()">Bersihkan Papan</button>
+      <button class="btn-primary" onclick="cekJaringJaring()">Cek Bentuknya</button>
+    </div>
+    <p class="feedback" id="feedback-grid" hidden style="max-width: 400px; text-align: center; margin-top: 1rem;"></p>
+    <p id="catatan-karton" class="hint-level" style="max-width:520px; margin:1rem auto 0; text-align:center;" role="status" aria-live="polite"></p>
+  </div>
+
+
+  <hr style="border:none;border-top:1px solid var(--border);margin:2rem 0;">
+  
+  <h3>⭐ Ekstra: Pasangan Sisi Berhadapan</h3>
+  <p style="font-size:.9rem; color:var(--muted);">⭐ Opsional: kerjakan kalau waktu masih tersisa.</p>
+<p>Perhatikan jaring-jaring kubus berikut. Jika jaring-jaring ini dilipat menjadi sebuah kubus tertutup, uji kemampuan bayangan ruangmu dengan menjawab pertanyaan di bawah ini!</p>
+
+<!-- WADAH APLET GEOGEBRA (Ditaruh di luar kotak kuis agar tampil di atas) -->
+<div id="ggb-net-warna" style="width: 100%; max-width: 700px; height: 450px; margin: 1.5rem auto; border: 2px solid var(--border); border-radius: 8px; overflow: hidden;"></div>
+<div id="kontrol-lipat" hidden style="max-width:700px; margin:0 auto 1rem; text-align:center;">
+  <p style="margin:.2rem 0; font-weight:600;">🔍 Buktikan sendiri: lipat jaring-jaringnya, lalu putar kubusnya!</p>
+  <input type="range" id="slider-lipat" min="0" max="100" value="0"
+  oninput="aturLipat(this.value/100)" style="width:80%;">
+  <div style="margin-top:.4rem; display:flex; gap:10px; justify-content:center;">
+    <button class="btn-primary" onclick="animasiLipat(1)">▶ Lipat</button>
+    <button class="btn-ghost" onclick="animasiLipat(0)">↺ Buka lagi</button>
+  </div>
+</div>
+
+<!-- KOTAK AREA KUIS DINAMIS -->
+<div style="background-color:#f9f9f9; padding:1.5rem; border-radius:8px; border:1px solid var(--border); text-align:center; margin-top: 1rem;">
+  <p style="font-size:1.1rem; margin-bottom:1.5rem;">
+    Jika sisi berwarna <strong id="warna-alas" style="color:red; font-size:1.2rem;">MERAH</strong> dijadikan ALAS (bawah), sisi warna apakah yang akan posisinya berhadapan dan menjadi TUTUP (atas)?
+  </p>
+
+  <!-- TOMBOL PILIHAN WARNA -->
+  <div style="display:flex; flex-wrap:wrap; gap:10px; justify-content:center; margin-bottom:1.5rem;">
+    <button onclick="cekTebakanWarna('Merah')"  style="padding:10px 20px; min-height:44px; border:none; border-radius:6px; background-color:#e74c3c; color:#fff;    font-weight:bold; font-size:1.2rem; cursor:pointer;">Merah</button>
+    <button onclick="cekTebakanWarna('Biru')"   style="padding:10px 20px; min-height:44px; border:none; border-radius:6px; background-color:#3498db; color:#fff;    font-weight:bold; font-size:1.2rem; cursor:pointer;">Biru</button>
+    <button onclick="cekTebakanWarna('Kuning')" style="padding:10px 20px; min-height:44px; border:none; border-radius:6px; background-color:#f1c40f; color:#333;    font-weight:bold; font-size:1.2rem; cursor:pointer;">Kuning</button>
+    <button onclick="cekTebakanWarna('Hijau')"  style="padding:10px 20px; min-height:44px; border:none; border-radius:6px; background-color:#2ecc71; color:#0b3d38; font-weight:bold; font-size:1.2rem; cursor:pointer;">Hijau</button>
+    <button onclick="cekTebakanWarna('Ungu')"   style="padding:10px 20px; min-height:44px; border:none; border-radius:6px; background-color:#9b59b6; color:#fff;    font-weight:bold; font-size:1.2rem; cursor:pointer;">Ungu</button>
+    <button onclick="cekTebakanWarna('Jingga')" style="padding:10px 20px; min-height:44px; border:none; border-radius:6px; background-color:#e67e22; color:#3b2200; font-weight:bold; font-size:1.2rem; cursor:pointer;">Jingga</button>
+  </div>
+
+  <!-- FEEDBACK DAN TOMBOL GANTI SOAL -->
+  <div id="feedback-warna" style="padding:1rem; border-radius:6px; font-weight:bold; margin-bottom:1rem; display:none;"></div>
+  
+  <button onclick="acakSoalWarna()" style="padding:8px 16px; border:2px solid var(--accent); background-color:white; color:var(--accent); border-radius:6px; font-weight:bold; cursor:pointer; transition:all 0.2s;">
+    🔄 Acak Pertanyaan Lain
+  </button>
+</div>
+
+
+<!-- KARTU CHECK-POINT 2 -->
+<div style="background:var(--warn-bg); border:2px dashed var(--accent); border-radius:var(--radius); padding:1.25rem; margin:2.5rem 0 2rem; text-align:center;">
+  <h4 style="margin:0 0 .4rem; color:var(--accent-dark); font-size:1.1rem;">📍 Check-Point 2: Diskusi Jaring-jaring Karton</h4>
+  <p style="margin:0 0 .8rem; font-size:0.9rem; color:var(--muted);">
+    Pastikan kamu dan kelompokmu sudah sepakat mengenai pola jaring-jaring hemat karton sebelum membuka Bagian C!
+  </p>
+  <button class="btn-primary" id="btn-cp2" onclick="bukaCheckPoint2()" style="white-space: nowrap;">🔓 Selesaikan Check-Point 2</button>
+  <p id="status-cp2" hidden style="color:var(--secondary); font-weight:700; margin-top:.5rem; font-size:0.9rem;">
+    ✅ Check-Point 2 Selesai! Bagian C di bawah sudah terbuka.
+  </p>
+</div>
+
+<hr style="border:none;border-top:2px solid var(--border);margin:2.5rem 0;">
+
+<!-- WRAPPER BAGIAN C (TERKUNCI SECARA DEFAULT) -->
+<div id="bagian-c-wrapper" style="opacity: 0.35; pointer-events: none; filter: grayscale(90%); transition: all 0.5s ease;">
+  <h2 id="bagian-c-title">Bagian C — Isi &amp; Volume Kotak</h2>
+
+  <!-- VISUAL ACUAN TEBAKAN VOLUME -->
+  <div style="background: var(--surface); border: 1.5px solid var(--border); border-radius: var(--radius); padding: 1rem; text-align: center; margin: 1rem 0;">
+    <p style="margin: 0 0 .5rem; font-weight: 600; font-size: 0.95rem; color: var(--primary);">
+      📦 Wadah Kotak Bakpia vs 1 Kubus Satuan
+    </p>
+    
+    <svg viewBox="0 0 260 165" role="img" aria-label="Perbandingan satu kubus satuan dengan wadah kubus berukuran 3 × 3 × 3." style="width: 100%; max-width: 290px; display: block; margin: 0 auto;">
+      <g id="kubus-satuan">
+        <polygon points="40,65 60,76 40,87 20,76" fill="#FFBF69" stroke="#E8A33D" stroke-width="1.5"/>
+        <polygon points="20,76 40,87 40,111 20,100" fill="#FF9F1C" stroke="#E8A33D" stroke-width="1.5"/>
+        <polygon points="40,87 60,76 60,100 40,111" fill="#E8A33D" stroke="#E8A33D" stroke-width="1.5"/>
+        <text x="40" y="132" text-anchor="middle" font-size="10" font-weight="bold" fill="var(--accent-dark)" font-family="sans-serif">1 Kubus Satuan</text>
+      </g>
+
+      <g id="wadah-kubus-3x3">
+        <line x1="160" y1="74" x2="100" y2="107" stroke="#2EC4B6" stroke-width="1.5" stroke-dasharray="4,4" opacity="0.6"/>
+        <line x1="160" y1="74" x2="220" y2="107" stroke="#2EC4B6" stroke-width="1.5" stroke-dasharray="4,4" opacity="0.6"/>
+        <line x1="160" y1="74" x2="160" y2="2" stroke="#2EC4B6" stroke-width="1.5" stroke-dasharray="4,4" opacity="0.6"/>
+
+        <polygon points="160,2 220,35 160,68 100,35" fill="rgba(46, 196, 182, 0.12)" stroke="#197269" stroke-width="2"/>
+        <polygon points="100,35 160,68 160,140 100,107" fill="rgba(46, 196, 182, 0.20)" stroke="#197269" stroke-width="2"/>
+        <polygon points="160,68 220,35 220,107 160,140" fill="rgba(46, 196, 182, 0.28)" stroke="#197269" stroke-width="2"/>
+
+        <line x1="140" y1="13" x2="200" y2="46" stroke="#197269" stroke-width="1.2" stroke-dasharray="3,3"/>
+        <line x1="120" y1="24" x2="180" y2="57" stroke="#197269" stroke-width="1.2" stroke-dasharray="3,3"/>
+        <line x1="180" y1="13" x2="120" y2="46" stroke="#197269" stroke-width="1.2" stroke-dasharray="3,3"/>
+        <line x1="200" y1="24" x2="140" y2="57" stroke="#197269" stroke-width="1.2" stroke-dasharray="3,3"/>
+
+        <line x1="120" y1="46" x2="120" y2="118" stroke="#197269" stroke-width="1.2" stroke-dasharray="3,3"/>
+        <line x1="140" y1="57" x2="140" y2="129" stroke="#197269" stroke-width="1.2" stroke-dasharray="3,3"/>
+        <line x1="100" y1="59" x2="160" y2="92" stroke="#197269" stroke-width="1.2" stroke-dasharray="3,3"/>
+        <line x1="100" y1="83" x2="160" y2="116" stroke="#197269" stroke-width="1.2" stroke-dasharray="3,3"/>
+
+        <line x1="180" y1="57" x2="180" y2="129" stroke="#197269" stroke-width="1.2" stroke-dasharray="3,3"/>
+        <line x1="200" y1="46" x2="200" y2="118" stroke="#197269" stroke-width="1.2" stroke-dasharray="3,3"/>
+        <line x1="160" y1="92" x2="220" y2="59" stroke="#197269" stroke-width="1.2" stroke-dasharray="3,3"/>
+        <line x1="160" y1="116" x2="220" y2="83" stroke="#197269" stroke-width="1.2" stroke-dasharray="3,3"/>
+
+        <text x="160" y="155" text-anchor="middle" font-size="11" fill="var(--muted)" font-family="sans-serif">Wadah Kubus (3 × 3 × 3)</text>
+      </g>
+    </svg>
+  </div>
+
+  <!-- INPUT PREDIKSI VOLUME -->
+  <div class="answer-row" style="flex-direction:column; align-items:stretch;">
+    <label for="input-prediksi-volume" style="font-weight:700;">Dugaan Awal Volume:</label>
+    <p style="margin:.25rem 0 .5rem; font-size:0.9rem; color:var(--muted);">
+      Berdasarkan pembanding di atas, berapa banyak <strong>kubus satuan kecil</strong> yang dibutuhkan untuk mengisi wadah transparan tersebut sampai penuh?
+    </p>
+    <textarea id="input-prediksi-volume" placeholder="Tuliskan dugaannmu di sini (misal: 20 kubus satuan)..." style="min-height:55px;"></textarea>
+    <button class="btn-ghost" style="margin-top:.5rem; align-self:flex-start;" onclick="simpanPrediksi('volume-isi','input-prediksi-volume'); tampilkanCallback('volume-isi','callback-prediksi-volume')">Simpan Dugaan</button>
+  </div>
+  <p id="callback-prediksi-volume" style="font-style:italic; color:var(--muted); border-left:3px solid var(--primary); padding-left:.75rem; margin:1rem 0;"></p>
+
+  <!-- LANGKAH 1 (TETAP DI TEMPATNYA) -->
+  <div style="margin: 1.5rem 0; padding: 1.5rem; background: var(--surface); border: 2px solid var(--border); border-radius: var(--radius);">
+    <h3 style="margin-top: 0; color: var(--primary);">Langkah 1: Menyelidiki Lapisan Volume</h3>
+    <p>Sebuah kubus kosong berukuran 3 × 3 × 3 akan diisi dengan kubus-kubus satuan kecil. Mari visualisasikan jumlahnya lapis demi lapis!</p>
+    <div style="display: flex; gap: 2rem; flex-wrap: wrap; align-items: center; margin-top: 1.5rem;">
+      <div style="flex: 1; text-align: center; min-width: 250px;">
+        <div id="layer-visual"></div>
+        <p style="margin-top: 2rem; font-weight: 700; color: var(--primary);">Lantai ke-<span id="current-layer">0</span> dari 3</p>
+      </div>
+      <div style="flex: 1; min-width: 250px;">
+        <p><strong>Berapa banyak kubus satuan pada satu lantai dasar (alas)?</strong></p>
+        <div class="answer-row">
+          <input type="text" id="ans-alas" placeholder="... buah" style="width: 100px; text-align: center;">
+          <button class="btn-primary" onclick="cekAlas()">Cek</button>
+        </div>
+        <p id="feedback-alas" class="feedback" hidden></p>
+        <div id="kontrol-lapis" style="opacity: 0.5; pointer-events: none; margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px dashed var(--border);">
+          <p><strong>Tambahkan lapisan kubus satuan sampai penuh:</strong></p>
+          <div style="display: flex; gap: 1rem; margin-top: 0.5rem;">
+            <button class="btn-primary" onclick="ubahLapis(1)">+ Tambah 1 Lapis</button>
+            <button class="btn-ghost" onclick="resetLapis()">Reset</button>
+          </div>
+          <p style="margin-top: 1rem; font-size: 1.1rem;">Total Kubus Saat Ini: <strong style="color: var(--accent-dark); font-size: 1.5rem;" id="total-kubus">0</strong></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr style="border:none;border-top:2px solid var(--border);margin:2.5rem 0;">
+
+  <!-- LANGKAH 2: AIR AKUARIUM & EKSPLORASI SKALA -->
+  <h3 style="color: var(--primary); margin-bottom: 0.5rem;">Langkah 2: Volume Air Akuarium &amp; Skala Ukuran</h3>
+  <p>Di sini, air berperan sama seperti satuan kubik yang kamu bayangkan tadi — bedanya cuma bentuk "pengisi ruang"-nya (cair, bukan kotak-kotak kecil). Banyaknya air yang tertampung tetap mengukur hal yang sama: <strong>volume</strong>.</p>
+
+  <!-- 2A. TABEL TARGET PENGAMATAN (DI ATAS GEOGEBRA) -->
+  <div style="background:var(--surface); border:1.5px solid var(--border); border-radius:var(--radius); padding:1.25rem; margin:1.5rem 0;">
+    <h4 style="margin-top:0; color:var(--primary); font-size:1.1rem;">Eksplorasi: Membesar Berapa Kali Lipat?</h4>
+    <p style="font-size:0.95rem; line-height:1.6; margin-bottom:1rem;">
+      Coba beberapa pasangan rusuk berbeda (rusuk awal bebas antara 2–10 cm, lalu rusuk dua kali lipatnya). Geser slider pada simulasi GeoGebra di bawah sampai penuh, lalu catat luas &amp; volumenya di tabel ini.
+    </p>
+
+    <div id="tabel-proporsional" style="overflow-x:auto;"></div>
+  </div>
+
+  <!-- 2B. SIMULASI GEOGEBRA VOLUME AIR (DI TENGAH) -->
+  <div class="geogebra-block" style="margin:1.5rem 0;">
+    <p style="font-size:0.95rem; margin-bottom:.5rem;">Geser slider untuk mengisi kubus dengan air, sedikit demi sedikit hingga penuh:</p>
+    <div class="answer-row">
+      <label for="input-rusuk-custom">Coba ganti panjang rusuk (2–20 cm):</label>
+      <input type="text" id="input-rusuk-custom" size="4" value="4">
+      <button class="btn-ghost" onclick="terapkanRusuk()">Terapkan Rusuk</button>
+    </div>
+    
+    <div class="ggb-frame"><div id="ggb-volume"></div></div>
+    <p class="ggb-caption">Jika tampilan kosong, klik tombol di bawah untuk memuat ulang.</p>
+    <div style="display:flex; flex-wrap:wrap; gap:.75rem; margin:.5rem 0 1rem;">
+      <button class="btn-ghost" onclick="muatVolumeKubus()">Muat ulang</button>
+      <button class="btn-primary" onclick="putarOtomatisVolume()">▶ / ⏸ Putar Otomatis</button>
+    </div>
+
+    <p id="volume-live" style="font-family:var(--font-mono); font-size:.9rem; color:var(--primary); font-weight:600; margin-top:.75rem;">Volume air saat ini: 0.0 cm³</p>
+    <p id="volume-live-satuan" style="font-family:var(--font-mono); font-size:.85rem; color:var(--muted); margin-top:.25rem;">≈ 0 satuan kubik (tiap satuan berukuran 1×1×1 cm)</p>
+    <p id="luas-live" style="font-family:var(--font-mono); font-size:.9rem; color:var(--accent-dark); font-weight:600; margin-top:.5rem;">Luas Permukaan Total Kubus: 96.0 cm² (Tetap)</p>
+
+  <!-- 2C. PENEMUAN POLA HUBUNGAN (DI BAWAH GEOGEBRA) -->
+  <div style="background:var(--warn-bg); border-left:4px solid var(--primary); padding:1.25rem; border-radius:0 var(--radius-sm) var(--radius-sm) 0; margin:2rem 0;">
+    <h4 style="margin-top:0; color:var(--primary); font-size:1.1rem;">💡 Penemuan Pola Hubungan</h4>
+    <p style="font-size:0.95rem; margin-bottom:1rem;">Berdasarkan data tabel yang sudah kamu lengkapi dari pengamatan simulasi di atas:</p>
+    
+    <div class="answer-row" style="font-size:0.95rem; line-height:1.8;">
+      <span>Polaku: tiap rusuk dua kali lipat, luas permukaan menjadi</span>
+      <input type="text" id="prop-simpul-luas" size="3" placeholder="..." style="text-align:center;">
+      <span>kali lipat, dan volume menjadi</span>
+      <input type="text" id="prop-simpul-volume" size="3" placeholder="..." style="text-align:center;">
+      <span>kali lipat.</span>
+    </div>
+    <button class="btn-ghost" style="margin-top:0.75rem;" onclick="simpanCatatanProporsional()">Simpan Catatan Pola</button>
+    <p class="journal-status" id="status-catatan-prop" hidden></p>
+  </div>
+
+  <!-- KARTU CHECK-POINT 3 / NAVIGASI SELESAI -->
+  <div style="background:var(--surface); border:2px solid var(--secondary); border-radius:var(--radius); padding:1.5rem; text-align:center; margin-top:2.5rem;">
+    <h4 style="margin:0 0 .4rem; color:var(--secondary); font-size:1.1rem;">📍 Check-Point 3: Akhir Penyelidikan</h4>
+    <p style="margin:0 0 1rem; font-size:0.9rem; color:var(--muted);">
+      Hebat! Kamu dan kelompokmu telah menyelesaikan seluruh rangkaian penyelidikan rangka, jaring-jaring, dan volume kotak Pak Tono.
+    </p>
+    <!-- UBAH MENJADI: -->
+    <button class="btn-primary" onclick="selesaikanPenyelidikan()">Lanjut: Pengembangan Hasil →</button>
+  </div>
+</div>
+</div>
+</section>
+</div>
+
+<script src="https://www.geogebra.org/apps/deployggb.js"></script>
+<script>
+  var ggbApiUnsur = null;
+    // ===== Pembantu aksesibilitas & layar HP =====
+    function pusatkanGgb(api, titik) {
+    api.evalCommand('CenterView(' + titik + ')');
+    setTimeout(function () { try { api.evalCommand('CenterView(' + titik + ')'); } catch (e) {} }, 500);
+  }
+    function lebarGgb(id, maks) {
+    var el = document.getElementById(id);
+    var w = el && el.clientWidth;
+    if (!w) w = window.innerWidth - 40;      // wadah masih tersembunyi: pakai lebar layar
+    return Math.max(260, Math.min(w, maks));
+  }
+
+  function tampilPesan(teks) {
+    var el = document.getElementById('pesan-global');
+    if (!el) {
+      el = document.createElement('div'); el.id = 'pesan-global';
+      el.setAttribute('role', 'alert');
+      el.style.cssText = 'position:fixed; left:50%; bottom:1rem; transform:translateX(-50%); width:max-content; max-width:92vw; background:#7a2e00; color:#fff; padding:.75rem 1rem; border-radius:10px; font-weight:600; z-index:1000; box-shadow:0 4px 14px rgba(0,0,0,.25); cursor:pointer;';
+      el.onclick = function () { el.hidden = true; };
+      document.body.appendChild(el);
+    }
+    el.textContent = teks + ' (ketuk untuk menutup)'; el.hidden = false;
+    clearTimeout(el._t); el._t = setTimeout(function () { el.hidden = true; }, 10000);
+  }
+
+  // Di layar sentuh, aplet 3D bisa "menjebak" gulir halaman. Tombol ini menguncinya.
+  function lindungiGulir(idWadah, awalTerkunci) {
+    if (!window.matchMedia || !matchMedia('(pointer: coarse)').matches) return;
+    var wadah = document.getElementById(idWadah), idTombol = 'kunci-' + idWadah;
+    if (!wadah || document.getElementById(idTombol)) return;
+    var tombol = document.createElement('button');
+    tombol.type = 'button'; tombol.id = idTombol; tombol.className = 'btn-ghost';
+    tombol.style.cssText = 'display:block; margin:.5rem auto;';
+    function atur(kunci) {
+      wadah.style.pointerEvents = kunci ? 'none' : 'auto';
+      tombol.textContent = kunci ? '👆 Aktifkan putar 3D' : '🔒 Kunci agar bisa menggulir halaman';
+    }
+    tombol.onclick = function () { atur(wadah.style.pointerEvents !== 'none'); };
+    wadah.parentNode.insertAdjacentElement('afterend', tombol);
+    atur(!!awalTerkunci);
+  }
+  /* ===== Bagian A: Inventaris Kerangka (titik, rusuk, sisi) ===== */
+var ggbApiUnsur = null, modeUnsur = 'titik', tampilanPadat = true;
+var UNSUR = { titik: {}, rusuk: {}, sisi: {} };
+var TITIK_N = ['A','B','C','D','E','F','G','H'];
+var TITIK_XYZ = { A:[-2,-2,0], B:[2,-2,0], C:[2,2,0], D:[-2,2,0], E:[-2,-2,4], F:[2,-2,4], G:[2,2,4], H:[-2,2,4] };
+var RUSUK_N = ['AB','BC','CD','DA','EF','FG','GH','HE','AE','BF','CG','DH'];
+var SISI_N = ['ABCD','EFGH','ABFE','BCGF','CDHG','DAEH'];
+var JENIS_RUSUK = {
+    tegak:  { isi: ['AE','BF','CG','DH'], teks: 'Rusuk tegak (4): menyalurkan beban tumpukan ke bawah. Paling kuat menahan beban.' },
+  atas:   { isi: ['EF','FG','GH','HE'], teks: 'Rusuk mendatar atas (4): membingkai tutup kotak.' },
+  bawah:  { isi: ['AB','BC','CD','DA'], teks: 'Rusuk mendatar bawah (4): membingkai alas kotak.' }
+};
+
+function namaObj(jenis, n) { return jenis === 'titik' ? n : (jenis === 'rusuk' ? 'r' : 's') + n; }
+function infoUnsur(teks) { var el = document.getElementById('identifikasi-info'); if (el) el.textContent = teks; }
+function hitungUnsur() {
+  ['titik', 'rusuk', 'sisi'].forEach(function (k) {
+    var el = document.getElementById('cnt-' + k);
+    if (el) el.textContent = Object.keys(UNSUR[k]).length;
+  });
+}
+
+function gayaUnsur(jenis, n) {
+  var api = ggbApiUnsur; if (!api) return;
+  var on = !!UNSUR[jenis][n], o = namaObj(jenis, n);
+  if (jenis === 'titik') {
+    api.setColor(o, on ? 255 : 30, on ? 159 : 36, on ? 28 : 48);
+    api.setPointSize(o, on ? 9 : 6);
+    api.setLabelVisible(o, on);
+  } else if (jenis === 'rusuk') {
+    api.setColor(o, on ? 255 : 43, on ? 159 : 58, on ? 28 : 85);
+    api.setLineThickness(o, on ? 9 : 5);
+  } else {
+    api.setColor(o, on ? 255 : 46, on ? 159 : 196, on ? 28 : 182);
+    api.setFilling(o, tampilanPadat ? 1 : 0.2);
+  }
+}
+
+function klikUnsur(jenis, n) {
+  if (jenis !== modeUnsur) return;
+  if (UNSUR[jenis][n]) delete UNSUR[jenis][n]; else UNSUR[jenis][n] = true;
+  var on = !!UNSUR[jenis][n];
+  gayaUnsur(jenis, n);
+  hitungUnsur();
+    if (jenis === 'titik') infoUnsur('Titik sudut ' + n + (on ? ': pelindung dipasang.' : ': dilepas.'));
+  else if (jenis === 'rusuk') infoUnsur('Rusuk ' + n + (on ? ': lis dipasang.' : ': dilepas.'));
+  else infoUnsur('Sisi ' + n + (on ? ': panel dipasang.' : ': dilepas.'));
+}
+
+function setModeUnsur(m) {
+  modeUnsur = m;
+  ['titik', 'rusuk', 'sisi'].forEach(function (k) {
+    var b = document.getElementById('mode-' + k);
+    if (b) b.className = (k === m) ? 'btn-primary' : 'btn-ghost';
+  });
+    infoUnsur({
+    titik: 'Klik titik sudut untuk memasang pelindung.',
+    rusuk: 'Klik rusuk untuk memasang lis.',
+    sisi:  'Klik bagian tengah sisi untuk memasang panel.'
+  }[m]);
+}
+
+function toggleTampilan() {
+  tampilanPadat = !tampilanPadat;
+  SISI_N.forEach(function (n) { gayaUnsur('sisi', n); });
+  var b = document.getElementById('btn-tampilan');
+  if (b) b.textContent = '👁 Tampilan: ' + (tampilanPadat ? 'Padat' : 'Tembus pandang');
+}
+
+function resetInventaris() { muatUlangKubus(); }
+
+function muatUlangKubus() {
+  UNSUR = { titik: {}, rusuk: {}, sisi: {} };
+  modeUnsur = 'titik'; tampilanPadat = true;
+  setModeUnsur('titik'); hitungUnsur();
+  var bt = document.getElementById('btn-tampilan'); if (bt) bt.textContent = '👁 Tampilan: Padat';
+  var params = {
+    appName: '3d', width: lebarGgb('ggb-cube', 900), height: window.innerWidth < 600 ? 420 : 560,
+    showToolBar: false, showAlgebraInput: false, showAlgebraView: false, showMenuBar: false,
+    showResetIcon: false, showGrid: false, showAxes: false, enableRightClick: false, borderColor: 'none',
+    appletOnLoad: function (api) {
+      ggbApiUnsur = api;
+      TITIK_N.forEach(function (n) {
+        api.evalCommand(n + '=(' + TITIK_XYZ[n].join(',') + ')');
+        api.setFixed(n, true, true);
+      });
+      SISI_N.forEach(function (n) { api.evalCommand('s' + n + '=Polygon(' + n.split('').join(',') + ')'); });
+      RUSUK_N.forEach(function (n) { api.evalCommand('r' + n + '=Segment(' + n[0] + ',' + n[1] + ')'); });
+      api.getAllObjectNames().forEach(function (o) {
+        if (/segment/.test(api.getObjectType(o)) && !/^r[A-H]{2}$/.test(o)) api.setVisible(o, false);
+        api.setLabelVisible(o, false);
+      });
+      TITIK_N.forEach(function (n) { gayaUnsur('titik', n); api.registerObjectClickListener(n, function () { klikUnsur('titik', n); }); });
+      RUSUK_N.forEach(function (n) { gayaUnsur('rusuk', n); api.registerObjectClickListener('r' + n, function () { klikUnsur('rusuk', n); }); });
+      SISI_N.forEach(function (n) { gayaUnsur('sisi', n); api.registerObjectClickListener('s' + n, function () { klikUnsur('sisi', n); }); });
+      api.setVisible('xAxis', false); api.setVisible('yAxis', false);
+      api.setVisible('zAxis', false); api.setVisible('xOyPlane', false);
+      pusatkanGgb(api, '(0,0,1.4)');
+      api.evalCommand('ZoomOut(1.5)');
+    }
+  };
+  document.getElementById('ggb-cube').innerHTML = '';
+  new GGBApplet(params, true).inject('ggb-cube');
+  lindungiGulir('ggb-cube', false);
+}
+
+function sorotJenisRusuk(j) {
+  var api = ggbApiUnsur; if (!api) return;
+  RUSUK_N.forEach(function (n) {
+    var di = JENIS_RUSUK[j].isi.indexOf(n) !== -1;
+    api.setColor('r' + n, di ? 46 : 200, di ? 196 : 200, di ? 182 : 200);
+    api.setLineThickness('r' + n, di ? 10 : 3);
+  });
+  var dugaan = localStorage.getItem('kubus_pemanasan');
+  var el = document.getElementById('info-jenis-rusuk');
+    if (el) el.textContent = JENIS_RUSUK[j].teks + (dugaan ? ' Dugaan awalmu: "' + dugaan + '". Cocok?' : ' Cocok dengan dugaan awalmu?');
+}
+
+function cekCatatanPesanan() {
+  var kunci = { titik: 8, rusuk: 12, sisi: 6 };
+  var nama = { titik: 'pelindung sudut', rusuk: 'lis penguat', sisi: 'panel sisi' };
+  var fb = document.getElementById('feedback-catatan'), salah = [], belum = [];
+  Object.keys(kunci).forEach(function (k) {
+    var v = document.getElementById('cp-' + k).value.trim();
+    if (!/^\d+$/.test(v) || parseInt(v, 10) !== kunci[k]) salah.push(nama[k]);
+    else if (Object.keys(UNSUR[k]).length < kunci[k]) belum.push(nama[k]);
+  });
+  fb.hidden = false;
+  if (salah.length) {
+    fb.className = 'feedback feedback-retry';
+        fb.textContent = 'Belum tepat: ' + salah.join(', ') + '. Cek lagi penghitung "Terpasang" dan putar kerangkanya.';
+    return;
+  }
+  if (belum.length) {
+    fb.className = 'feedback feedback-retry';
+        fb.textContent = 'Angkamu benar. Sekarang tandai semuanya di kerangka ya.';
+    return;
+  }
+  fb.className = 'feedback feedback-success';
+    fb.textContent = 'Tepat! Pesanan rangka: 8 pelindung, 12 lis, 6 panel.';
+    state.catatanPesanan = { titik: 8, rusuk: 12, sisi: 6, selesai: true };
+    saveState(state);
+  var kj = document.getElementById('kotak-jenis-rusuk'); if (kj) kj.hidden = false;
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+  var c = state && state.catatanPesanan;
+  if (c) { ['titik', 'rusuk', 'sisi'].forEach(function (k) { var el = document.getElementById('cp-' + k); if (el && c[k]) el.value = c[k]; }); }
+  if (c && c.selesai) { var kj = document.getElementById('kotak-jenis-rusuk'); if (kj) kj.hidden = false; }
+});
+
+  var ggbApiKamuflase = null;
+  var rusukTerpilih = [];
+  var modeSeleksiAktif = false;
+  var daftarRusukKubus = ['R1','R2','R3','R4','R5','R6','R7','R8','R9','R10','R11','R12'];
+  var daftarPengecoh = ['Seg1','Seg2','Seg3','Seg4','Seg5','Seg6','Seg7','Seg8'];
+
+  function muatKamuflase() {
+    var params = {
+      appName: '3d', perspective: '5', width: lebarGgb('ggb-kamuflase', 900), height: 400, showToolBar: false,
+      showAlgebraInput: false, showMenuBar: false, showResetIcon: false, showGrid: false,
+      showAxes: false, enableRightClick: false, borderColor: 'none',
+      appletOnLoad: function (api) {
+        ggbApiKamuflase = api;
+        api.setVisible('xAxis', false); api.setVisible('yAxis', false);
+        api.setVisible('zAxis', false); api.setVisible('xOyPlane', false);
+        api.evalCommand('P1=(-1,-1,0)'); api.evalCommand('P2=(1,-1,0)'); api.evalCommand('P3=(1,1,0)'); api.evalCommand('P4=(-1,1,0)');
+        api.evalCommand('P5=(-1,-1,2)'); api.evalCommand('P6=(1,-1,2)'); api.evalCommand('P7=(1,1,2)'); api.evalCommand('P8=(-1,1,2)');
+        for(var i=1; i<=8; i++) api.setVisible('P'+i, false);
+        api.evalCommand('R1=Segment(P1,P2)'); api.evalCommand('R2=Segment(P2,P3)'); api.evalCommand('R3=Segment(P3,P4)'); api.evalCommand('R4=Segment(P4,P1)');
+        api.evalCommand('R5=Segment(P5,P6)'); api.evalCommand('R6=Segment(P6,P7)'); api.evalCommand('R7=Segment(P7,P8)'); api.evalCommand('R8=Segment(P8,P5)');
+        api.evalCommand('R9=Segment(P1,P5)'); api.evalCommand('R10=Segment(P2,P6)'); api.evalCommand('R11=Segment(P3,P7)'); api.evalCommand('R12=Segment(P4,P8)');
+        for(var i=0; i<daftarRusukKubus.length; i++){
+            api.setColor(daftarRusukKubus[i], 100, 100, 100);
+            api.setLineThickness(daftarRusukKubus[i], 4);
+            api.setLabelVisible(daftarRusukKubus[i], false);
+            api.registerObjectClickListener(daftarRusukKubus[i], 'klikRusukKamuflase');
+        }
+        api.evalCommand('Seg1 = Segment((-2,-1,-1), (2,2,3))');
+        api.evalCommand('Seg2 = Segment((-1.5, 2, -1), (1.5, -2, 2))');
+        api.evalCommand('Seg3 = Segment((0, -2.5, 1), (0, 2.5, 1))');
+        api.evalCommand('Seg4 = Segment((-2, 0, 2), (2, 0, -1))');
+        api.evalCommand('Seg5 = Segment((1.5, 1.5, 3), (-1.5, -1.5, -1))');
+        api.evalCommand('Seg6 = Segment((-2, 1, 3), (1, -2, -1))');
+        api.evalCommand('Seg7 = Segment((2, -1, 1.5), (-2, 2, 0))');
+        api.evalCommand('Seg8 = Segment((-1, -2, 2), (2, 1, -1))');
+        for(var j=0; j<daftarPengecoh.length; j++){
+            api.setColor(daftarPengecoh[j], 100, 100, 100);
+            api.setLineThickness(daftarPengecoh[j], 4);
+            api.setLabelVisible(daftarPengecoh[j], false);
+            api.registerObjectClickListener(daftarPengecoh[j], 'klikPengecoh');
+        }
+        pusatkanGgb(api, '(0,0,0.6)');
+        api.evalCommand('ZoomOut(1.4)');
+      }
+    };
+    var ggbAppKamuflase = new GGBApplet(params, true);
+    document.getElementById('ggb-kamuflase').innerHTML = '';
+    ggbAppKamuflase.inject('ggb-kamuflase');
+    lindungiGulir('ggb-kamuflase', false);
+  }
+
+    function klikRusukKamuflase(namaObjek) {
+      if (!modeSeleksiAktif) return;
+      if (rusukTerpilih.includes(namaObjek)) return;
+      rusukTerpilih.push(namaObjek);
+      ggbApiKamuflase.setColor(namaObjek, 232, 163, 61);
+      ggbApiKamuflase.setLineThickness(namaObjek, 6);
+      document.getElementById('status-pencarian').textContent = 'Rusuk kubus ditemukan: ' + rusukTerpilih.length + ' dari 12';
+      if (rusukTerpilih.length === 12) {
+          modeSeleksiAktif = false;
+          var fb = document.getElementById('feedback-persepsi');
+          fb.hidden = false;
+          fb.className = 'feedback feedback-success';
+          fb.textContent = 'HEBAT! Kamu berhasil menemukan dan merangkai seluruh ke-12 rusuk kubusnya secara mandiri!';
+          pudarkanGarisPengecoh();
+          state.kamuflase = { selesai: true, menyerah: false, salah: state.kamuflaseSalah || 0 };
+          saveState(state);
+      }
+  }
+
+  function klikPengecoh(namaObjek) {
+      if (!modeSeleksiAktif) return;
+      state.kamuflaseSalah = (state.kamuflaseSalah || 0) + 1;
+      saveState(state);
+      var fb = document.getElementById('feedback-persepsi');
+      fb.hidden = false;
+      fb.className = 'feedback feedback-retry';
+      fb.textContent = 'Oops! Garis yang baru saja kamu klik bukan bagian dari rusuk kubusnya. Coba amati lagi.';
+  }
+
+  function mulaiModeSeleksi() {
+      modeSeleksiAktif = true;
+      rusukTerpilih = [];
+      document.getElementById('grup-tombol-kamuflase').hidden = true;
+      document.getElementById('teks-tanya-kamuflase').textContent = 'Buktikan ketajaman matamu! Klik 12 garis di dalam kotak yang membentuk kubus tersebut.';
+      document.getElementById('status-pencarian').hidden = false;
+      document.getElementById('status-pencarian').textContent = 'Rusuk kubus ditemukan: 0 dari 12';
+      document.getElementById('feedback-persepsi').hidden = true;
+  }
+
+  function menyerahKamuflase() {
+      state.kamuflase = { selesai: true, menyerah: true, salah: state.kamuflaseSalah || 0 };
+      saveState(state);
+      document.getElementById('grup-tombol-kamuflase').hidden = true;
+      document.getElementById('teks-tanya-kamuflase').textContent = 'Tidak apa-apa, namanya juga kamuflase! Ini bentuk kubus aslinya:';
+      var fb = document.getElementById('feedback-persepsi');
+      fb.hidden = false;
+      fb.className = 'feedback feedback-retry';
+      fb.textContent = 'Garis pengecohnya sudah dipudarkan. Sekarang coba amati dan putar kubus oranye ini agar kamu terbiasa dengan bentuknya.';
+      if(ggbApiKamuflase) {
+          for(var i=0; i<daftarRusukKubus.length; i++){
+              ggbApiKamuflase.setColor(daftarRusukKubus[i], 232, 163, 61);
+              ggbApiKamuflase.setLineThickness(daftarRusukKubus[i], 5);
+          }
+          pudarkanGarisPengecoh();
+      }
+  }
+
+  function pudarkanGarisPengecoh() {
+      for(var i=0; i<daftarPengecoh.length; i++){
+          ggbApiKamuflase.setColor(daftarPengecoh[i], 220, 220, 220);
+          ggbApiKamuflase.setLineThickness(daftarPengecoh[i], 1);
+      }
+  }
+
+    window.addEventListener('load', function() {
+      muatUlangKubus();
+      muatKamuflase();
+      muatJaringKubus();
+      initGrid();
+      muatVolumeKubus();
+      initVisual();
+      buatTabelProporsional();
+  });
+
+  // 2. Tampilkan teks petunjuk di bawahGeoGebra
+  var petunjuk = document.getElementById('petunjuk-verifikasi');
+  if (petunjuk) {
+    petunjuk.hidden = false;
+  }
+
+  // 3. Scroll halus presisi ke elemen GeoGebra di atas
+  var targetGgb = document.getElementById('ggb-cube');
+  if (targetGgb) {
+    targetGgb.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+
+    /* ===== BAGIAN B: LUAS PERMUKAAN & JARING-JARING ===== */
+  var ggbApiNet;
+  function muatJaringKubus() {
+    var params = {
+      appName: '3d', width: lebarGgb('ggb-net', 900), height: window.innerWidth < 600 ? 420 : 600, showToolBar: false, showAlgebraInput: false,
+      showAlgebraView: false, showMenuBar: false, showResetIcon: false, showGrid: false,
+      showAxes: false, enableRightClick: false, borderColor: 'none',
+      appletOnLoad: function (api) {
+        ggbApiNet = api;
+        api.evalCommand('kubus=Cube((-2,-2,0),(2,-2,0))');
+        api.evalCommand('t=Slider(0,1,0.01)');
+        api.evalCommand('a=Net(kubus,t)');
+        api.evalCommand('SetConditionToShowObject(kubus,t<1)');
+        pusatkanGgb(api, '(0,0,1.2)');
+        api.evalCommand('ZoomOut(2.5)');
+        api.setColor('kubus', 43, 58, 85);
+        api.setColor('a', 232, 163, 61);
+        api.setVisible('xAxis', false); api.setVisible('yAxis', false); api.setVisible('zAxis', false);
+      }
+    };
+    var ggbApp = new GGBApplet(params, true);
+    document.getElementById('ggb-net').innerHTML = '';
+    ggbApp.inject('ggb-net');
+  }
+  function putarOtomatis() {
+    if (!ggbApiNet) return;
+    if (ggbApiNet.isAnimationRunning()) {
+      ggbApiNet.stopAnimation();
+    } else {
+      if (ggbApiNet.getValue('t') >= 1) ggbApiNet.setValue('t', 0);
+      ggbApiNet.setAnimating('t', true);
+      ggbApiNet.startAnimation();
+    }
+  }
+
+  // Papan jaring-jaring interaktif 5x5
+  var selCells = new Set();
+  function initGrid() {
+    var gridJaring = document.getElementById('grid-jaring');
+    gridJaring.innerHTML = '';
+    selCells.clear();
+    for (var r = 0; r < 5; r++) {
+      for (var c = 0; c < 5; c++) {
+        (function (r, c) {
+          var cell = document.createElement('div');
+          cell.style.cssText = 'width:45px;height:45px;border:2px solid var(--border);background-color:#fff;cursor:pointer;border-radius:6px;transition:all .2s ease;';
+          cell.onclick = function () { toggleCell(cell, r, c); };
+          gridJaring.appendChild(cell);
+        })(r, c);
+      }
+    }
+    updateStatus();
+  }
+  function toggleCell(cell, r, c) {
+    var key = r + ',' + c;
+    if (selCells.has(key)) {
+      selCells.delete(key);
+      cell.style.backgroundColor = '#fff';
+      cell.style.borderColor = 'var(--border)';
+      cell.style.transform = 'scale(1)';
+    } else {
+      if (selCells.size < 6) {
+        selCells.add(key);
+        cell.style.backgroundColor = 'var(--accent)';
+        cell.style.borderColor = 'var(--accent-dark)';
+        cell.style.transform = 'scale(0.9)';
+      } else {
+        tampilkanFeedbackGrid('Kamu sudah memilih 6 kotak! Cek bentuknya atau bersihkan papan.', false);
+        return;
+      }
+    }
+    updateStatus();
+  }
+  function updateStatus() {
+    document.getElementById('status-kotak').textContent = 'Kotak terpilih: ' + selCells.size + ' / 6';
+    document.getElementById('feedback-grid').hidden = true;
+  }
+  function resetGrid() { initGrid(); }
+  // Papan jaring-jaring interaktif 5x5
+  var selCells = new Set();
+  function initGrid() {
+    var gridJaring = document.getElementById('grid-jaring');
+    gridJaring.innerHTML = '';
+    selCells.clear();
+    for (var r = 0; r < 5; r++) {
+      for (var c = 0; c < 5; c++) {
+        (function (r, c) {
+          var cell = document.createElement('div');
+          cell.style.cssText = 'width:45px;height:45px;border:2px solid var(--border);background-color:#fff;cursor:pointer;border-radius:6px;transition:all .2s ease;';
+          cell.onclick = function () { toggleCell(cell, r, c); };
+          gridJaring.appendChild(cell);
+        })(r, c);
+      }
+    }
+    updateStatus();
+  }
+  function toggleCell(cell, r, c) {
+    var key = r + ',' + c;
+    if (selCells.has(key)) {
+      selCells.delete(key);
+      cell.style.backgroundColor = '#fff';
+      cell.style.borderColor = 'var(--border)';
+      cell.style.transform = 'scale(1)';
+    } else {
+      if (selCells.size < 6) {
+        selCells.add(key);
+        cell.style.backgroundColor = 'var(--accent)';
+        cell.style.borderColor = 'var(--accent-dark)';
+        cell.style.transform = 'scale(0.9)';
+      } else {
+        tampilkanFeedbackGrid('Kamu sudah memilih 6 kotak! Cek bentuknya atau bersihkan papan.', false);
+        return;
+      }
+    }
+    updateStatus();
+  }
+  function updateStatus() {
+    document.getElementById('status-kotak').textContent = 'Kotak terpilih: ' + selCells.size + ' / 6';
+    document.getElementById('feedback-grid').hidden = true;
+  }
+  function resetGrid() { initGrid(); }
+
+  // FUNGSI CEK JARING-JARING (BARU & SUDAH DIPERBARUI)
+    // Pemeriksa jaring-jaring: simulasi lipatan (gulirkan dadu di atas pola; 6 muka harus menyentuh papan satu kali masing-masing)
+  function jaringValid(coords) {
+    var key = function (r, c) { return r + ',' + c; };
+    var ada = {}; coords.forEach(function (o) { ada[key(o.r, o.c)] = true; });
+    var terpakai = {}, kunjung = {}, ok = true;
+    function gulir(D, arah) {
+      if (arah === 'n') return { b: D.n, a: D.l, d: D.d, k: D.k, l: D.b, n: D.a };
+      if (arah === 'l') return { b: D.l, a: D.n, d: D.d, k: D.k, l: D.a, n: D.b };
+      if (arah === 'd') return { b: D.d, a: D.k, d: D.a, k: D.b, l: D.l, n: D.n };
+      return { b: D.k, a: D.d, d: D.b, k: D.a, l: D.l, n: D.n };
+    }
+    (function dfs(r, c, D) {
+      var k = key(r, c); if (kunjung[k]) return; kunjung[k] = true;
+      if (terpakai[D.b]) { ok = false; return; } terpakai[D.b] = true;
+      [['n', 0, 1], ['l', 0, -1], ['d', 1, 0], ['u', -1, 0]].forEach(function (a) {
+        if (ok && ada[key(r + a[1], c + a[2])]) dfs(r + a[1], c + a[2], gulir(D, a[0]));
+      });
+    })(coords[0].r, coords[0].c, { b: 1, a: 2, d: 3, k: 4, l: 5, n: 6 });
+    return ok && Object.keys(kunjung).length === 6;
+  }
+
+  function tampilkanCatatanKarton() {
+    var el = document.getElementById('catatan-karton'); if (!el) return;
+    var c = state && state.catatanKarton;
+        el.textContent = c
+      ? '📝 Catatan Karton: lembar ' + c.w + ' × ' + c.h + ' petak, terbuang ' + (c.luas - 6) + ' petak.'
+      : '📝 Belum ada pola tercatat.';
+  }
+
+  function cekJaringJaring() {
+    if (selCells.size !== 6) {
+      tampilkanFeedbackGrid('Jaring-jaring kubus harus terdiri dari tepat 6 persegi!', false);
+      return;
+    }
+    var coords = Array.from(selCells).map(function (k) {
+      var p = k.split(','); return { r: parseInt(p[0]), c: parseInt(p[1]) };
+    });
+    if (!cekTersambung(coords)) {
+      tampilkanFeedbackGrid('Semua kotak harus saling menempel (bersambung) ya!', false);
+      return;
+    }
+    if (!jaringValid(coords)) {
+          tampilkanFeedbackGrid('Belum tepat: kalau dilipat, sisinya bertumpuk atau bolong. Coba bentuk lain!', false);
+      return;
+    }
+    var rs = coords.map(function (k) { return k.r; }), cs = coords.map(function (k) { return k.c; });
+    var w = Math.max.apply(null, cs) - Math.min.apply(null, cs) + 1;
+    var h = Math.max.apply(null, rs) - Math.min.apply(null, rs) + 1;
+    var luas = w * h, lama = state.catatanKarton;
+    if (!lama || luas < lama.luas) {
+      state.catatanKarton = { w: Math.min(w, h), h: Math.max(w, h), luas: luas, selesai: true };
+      saveState(state);
+    }
+    tampilkanCatatanKarton();
+    var pesan = 'Pola valid! Lembar ' + Math.min(w, h) + ' × ' + Math.max(w, h) + ' petak, terbuang ' + (luas - 6) + ' petak.';
+    pesan += (state.catatanKarton.luas > 10) ? ' Adakah pola yang lebih hemat?' : ' Ini yang paling hemat!';
+    tampilkanFeedbackGrid(pesan, true);
+  }
+  document.addEventListener('DOMContentLoaded', tampilkanCatatanKarton);
+
+  // FUNGSI CEK TERSAMBUNG (TETAP)
+  function cekTersambung(coords) {
+    if (coords.length === 0) return false;
+    var visited = new Set(), queue = [coords[0]];
+    visited.add(coords[0].r + ',' + coords[0].c);
+    while (queue.length > 0) {
+      var curr = queue.shift();
+      var nb = [{r:curr.r+1,c:curr.c},{r:curr.r-1,c:curr.c},{r:curr.r,c:curr.c+1},{r:curr.r,c:curr.c-1}];
+      nb.forEach(function (n) {
+        var nKey = n.r + ',' + n.c;
+        if (coords.some(function (x) { return x.r === n.r && x.c === n.c; }) && !visited.has(nKey)) {
+          visited.add(nKey); queue.push(n);
+        }
+      });
+    }
+    return visited.size === coords.length;
+  }
+
+  // FUNGSI TAMPILKAN FEEDBACK (TETAP)
+  function tampilkanFeedbackGrid(pesan, sukses) {
+    var fb = document.getElementById('feedback-grid');
+    fb.hidden = false;
+    fb.textContent = pesan;
+    fb.className = 'feedback ' + (sukses ? 'feedback-success' : 'feedback-retry');
+  }
+
+    /* ===== BAGIAN C: VOLUME ===== */
+  var ggbApiVol, rVol = 4;
+  function muatVolumeKubus() {
+    var params = {
+      appName: '3d', showAlgebraView: false, width: lebarGgb('ggb-volume', 900), height: window.innerWidth < 600 ? 420 : 600, showToolBar: false, showAlgebraInput: false,
+      showMenuBar: false, showResetIcon: false, showGrid: false, showAxes: false,
+      enableRightClick: false, borderColor: 'none',
+      appletOnLoad: function (api) {
+        ggbApiVol = api;
+        api.evalCommand('r=' + rVol);
+        api.evalCommand('kubus=Cube((-r/2,-r/2,0),(r/2,-r/2,0))');
+        api.evalCommand('alas=Polygon((-r/2,-r/2,0),(r/2,-r/2,0),(r/2,r/2,0),(-r/2,r/2,0))');
+        api.evalCommand('t=Slider(0,1,0.01)');
+        api.evalCommand('air=Prism(alas,r*t)');
+        pusatkanGgb(api, '(0,0,' + (rVol * 0.3) + ')');
+        api.evalCommand('ZoomOut(' + (1.8 * rVol / 4) + ')');
+        api.setColor('kubus', 232, 163, 61);
+        api.setColor('air', 74, 144, 226);
+        api.setFilling('kubus', 0.15);
+        api.setFilling('air', 0.6);
+        api.setVisible('xAxis', false); api.setVisible('yAxis', false);
+        api.setVisible('zAxis', false); api.setVisible('xOyPlane', false);
+        api.registerObjectUpdateListener('air', updateVolumeDisplay);
+        updateVolumeDisplay();
+        api.getAllObjectNames().forEach(function (n) { if (/point/.test(api.getObjectType(n))) api.setLabelVisible(n, false); });
+      }
+    };
+    var ggbApp = new GGBApplet(params, true);
+    document.getElementById('ggb-volume').innerHTML = '';
+    ggbApp.inject('ggb-volume');
+    lindungiGulir('ggb-volume', true);
+  }
+  function updateVolumeDisplay() {
+    if (!ggbApiVol) return;
+    var v = ggbApiVol.getValue('air');
+    var el = document.getElementById('volume-live');
+    if (el) el.textContent = 'Volume air saat ini: ' + v.toFixed(1) + ' cm³';
+    var elSatuan = document.getElementById('volume-live-satuan');
+    if (elSatuan) elSatuan.textContent = '≈ ' + Math.round(v) + ' satuan kubik (tiap satuan berukuran 1×1×1 cm)';
+    var r = ggbApiVol.getValue('r');
+    var elLuas = document.getElementById('luas-live');
+    if (elLuas) elLuas.textContent = 'Luas Permukaan Total Kubus: ' + (6 * r * r).toFixed(1) + ' cm²';
+    if (ggbApiVol.getValue('t') >= 1 && ggbApiVol.isAnimationRunning()) ggbApiVol.stopAnimation();
+  }
+  function terapkanRusuk() {
+    if (!ggbApiVol) return;
+    var r = parseFloat(document.getElementById('input-rusuk-custom').value);
+    if (isNaN(r) || r < 2 || r > 20) { tampilPesan('Masukkan panjang rusuk antara 2 sampai 20 cm ya.'); return; }
+    rVol = r; muatVolumeKubus();
+  }
+  function putarOtomatisVolume() {
+    if (!ggbApiVol) return;
+    if (ggbApiVol.isAnimationRunning()) {
+      ggbApiVol.stopAnimation();
+    } else {
+      if (ggbApiVol.getValue('t') >= 1) ggbApiVol.setValue('t', 0);
+      ggbApiVol.setAnimating('t', true);
+      ggbApiVol.startAnimation();
+    }
+  }
+
+  // Visualisasi lapis kubus satuan (SVG isometrik)
+  var layerCount = 0, maxLayers = 3, gridSize = 3;
+  var layerVisual, currentLayerText, totalKubusText, kontrolLapis;
+  function initVisual() {
+    layerVisual = document.getElementById('layer-visual');
+    currentLayerText = document.getElementById('current-layer');
+    totalKubusText = document.getElementById('total-kubus');
+    kontrolLapis = document.getElementById('kontrol-lapis');
+    if (!layerVisual) return;
+    layerVisual.style.cssText = 'width:100%; display:flex; justify-content:center;';
+    renderSVG(0);
+  }
+  function renderSVG(layers) {
+    var svg = '<svg viewBox="0 0 200 220" role="img" aria-label="Tumpukan kubus satuan di dalam wadah, ' + layers + ' lapis terisi" style="width:100%; max-width:250px; height:auto;">';
+    if (layers === 0) {
+      for (var y = 0; y < gridSize; y++) {
+        for (var x = gridSize - 1; x >= 0; x--) {
+          var cx = 100 + (x - y) * 20, cy = 130 + (x + y) * 10;
+          svg += '<polygon points="' + cx + ',' + cy + ' ' + (cx+20) + ',' + (cy-10) + ' ' + cx + ',' + (cy-20) + ' ' + (cx-20) + ',' + (cy-10) + '" fill="transparent" stroke="#A0AABF" stroke-width="1.5" stroke-dasharray="3,2"/>';
+        }
+      }
+    } else {
+      for (var z = 0; z < layers; z++) {
+        for (var y2 = 0; y2 < gridSize; y2++) {
+          for (var x2 = gridSize - 1; x2 >= 0; x2--) {
+            var isOuter = (x2 === 0 || x2 === gridSize - 1 || y2 === 0 || y2 === gridSize - 1 || z === layers - 1);
+            if (!isOuter) continue;
+            var px = 100 + (x2 - y2) * 20, py = 130 + (x2 + y2) * 10 - (z * 22);
+            var top = (z === maxLayers - 1) ? '#FFBF69' : '#2EC4B6';
+            var left = (z === maxLayers - 1) ? '#FF9F1C' : '#239B90';
+            var right = (z === maxLayers - 1) ? '#C4841F' : '#197269';
+            svg += '<polygon points="' + px + ',' + py + ' ' + (px+20) + ',' + (py-10) + ' ' + px + ',' + (py-20) + ' ' + (px-20) + ',' + (py-10) + '" fill="' + top + '" stroke="#FFFFFF" stroke-width="0.7"/>';
+            svg += '<polygon points="' + px + ',' + py + ' ' + (px-20) + ',' + (py-10) + ' ' + (px-20) + ',' + (py+12) + ' ' + px + ',' + (py+22) + '" fill="' + left + '" stroke="#FFFFFF" stroke-width="0.7"/>';
+            svg += '<polygon points="' + px + ',' + py + ' ' + (px+20) + ',' + (py-10) + ' ' + (px+20) + ',' + (py+12) + ' ' + px + ',' + (py+22) + '" fill="' + right + '" stroke="#FFFFFF" stroke-width="0.7"/>';
+          }
+        }
+      }
+    }
+    svg += '</svg>';
+    layerVisual.innerHTML = svg;
+  }
+  function cekAlas() {
+    var input = document.getElementById('ans-alas').value.trim();
+    var fb = document.getElementById('feedback-alas');
+    fb.hidden = false;
+    if (input === '9') {
+      fb.className = 'feedback feedback-success';
+      fb.textContent = 'Tepat sekali! Luas alasnya adalah 3 x 3 = 9 kubus satuan. Sekarang, klik tombol "+ Tambah 1 Lapis" di bawah!';
+      kontrolLapis.style.opacity = '1';
+      kontrolLapis.style.pointerEvents = 'auto';
+    } else {
+      fb.className = 'feedback feedback-retry';
+      fb.textContent = 'Coba bayangkan lagi: panjang 3 kubus, lebar 3 kubus. 3 dikali 3 sama dengan...?';
+    }
+  }
+  function ubahLapis(jumlah) {
+    if (layerCount + jumlah > maxLayers) { tampilPesan('Kubus sudah penuh! Total 3 lapis (tinggi = 3).'); return; }
+    layerCount += jumlah;
+    currentLayerText.textContent = layerCount;
+    totalKubusText.textContent = layerCount * (gridSize * gridSize);
+    renderSVG(layerCount);
+  }
+  function resetLapis() {
+    layerCount = 0;
+    currentLayerText.textContent = 0;
+    totalKubusText.textContent = 0;
+    initVisual();
+    document.getElementById('ans-alas').value = '';
+    document.getElementById('feedback-alas').hidden = true;
+    kontrolLapis.style.opacity = '0.5';
+    kontrolLapis.style.pointerEvents = 'none';
+  }
+
+  // Tabel eksplorasi proporsional (pengganti LKPD kertas)
+  function buatTabelProporsional() {
+    var el = document.getElementById('tabel-proporsional');
+    if (!el) return;
+    var saved = (state && state.proporsional) || {};
+    var td = 'style="padding:.3rem; border-bottom:1px solid var(--border);"';
+    var h = '<div class="tabel-scroll"><table style="border-collapse:collapse; width:100%; max-width:560px;">';
+    h += '<tr><th ' + td + '>Percobaan</th><th ' + td + '>Rusuk (cm)</th><th ' + td + '>Luas permukaan (cm²)</th><th ' + td + '>Volume (cm³)</th></tr>';
+    for (var t = 1; t <= 2; t++) {
+      ['a', 'b'].forEach(function (s) {
+        h += '<tr><td ' + td + '>' + t + (s === 'a' ? ' — rusuk awal' : ' — rusuk ×2') + '</td>';
+        ['r', 'l', 'v'].forEach(function (k) {
+          var id = 'prop-' + t + '-' + s + '-' + k;
+                    h += '<td ' + td + '><input type="text" id="' + id + '" size="5" value="' + (saved[id] || '') + '" style="padding:.4rem;" aria-label="Percobaan ' + t + ', ' + (s === 'a' ? 'rusuk awal' : 'rusuk dikali 2') + ', ' + ({ r: 'panjang rusuk', l: 'luas permukaan', v: 'volume' })[k] + '"></td>'; '" size="5" value="' + (saved[id] || '') + '" style="padding:.4rem; font-size:.9rem;"></td>';
+        });
+        h += '</tr>';
+      });
+    }
+    h += '</table></div>';
+    el.innerHTML = h;
+    ['prop-simpul-luas', 'prop-simpul-volume'].forEach(function (id) {
+      if (saved[id]) document.getElementById(id).value = saved[id];
+    });
+  }
+  function simpanCatatanProporsional() {
+    var data = {};
+    var inputs = document.querySelectorAll('#tabel-proporsional input');
+    inputs.forEach(function (i) { data[i.id] = i.value; });
+    data['prop-simpul-luas'] = document.getElementById('prop-simpul-luas').value;
+    data['prop-simpul-volume'] = document.getElementById('prop-simpul-volume').value;
+    state.proporsional = data;
+    saveState(state);
+    var s = document.getElementById('status-catatan-prop');
+    s.hidden = false;
+    s.textContent = 'Tercatat di Lembar Pesanan.';
+  }
+
+function bukaCheckPoint1() {
+  if (!(state.catatanPesanan && state.catatanPesanan.selesai)) { tampilPesan('Isi dulu Lembar Pesanan dengan benar ya.'); return; }
+  if (!(state.rotWajib || state.rotLevel >= 2)) { tampilPesan('Selesaikan rotasi Level 1 dan 2 dulu ya.'); return; }
+  if (!(state.kamuflase && state.kamuflase.selesai)) { tampilPesan('Selesaikan Aktivitas 3 (temukan 12 rusuk) dulu ya.'); return; }
+  var wrapper = document.getElementById('bagian-b-wrapper');
+  var btn = document.getElementById('btn-cp1');
+  var status = document.getElementById('status-cp1');
+
+  // 1. Buka kuncian Bagian B
+  if (wrapper) {
+    wrapper.style.opacity = '1';
+    wrapper.style.pointerEvents = 'auto';
+    wrapper.style.filter = 'none';
+  }
+
+  // 2. Ubah status tombol
+  if (btn) {
+    btn.textContent = '✅ Check-Point 1 Selesai';
+    btn.style.backgroundColor = 'var(--secondary)';
+    btn.style.cursor = 'default';
+    btn.disabled = true;
+  }
+
+  if (status) status.hidden = false;
+
+  // 3. Simpan state progres
+  if (typeof state !== 'undefined') {
+    if (!state.checkpoints) state.checkpoints = {};
+    state.checkpoints.cp1 = true;
+    if (typeof saveState === 'function') saveState(state);
+  }
+
+  // 4. Scroll halus ke judul Bagian B
+  setTimeout(function() {
+    var bagianB = document.getElementById('bagian-b-title');
+    if (bagianB) bagianB.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 200);
+}
+
+// Daftarkan fungsi ke window agar selalu bisa dipanggil onclick HTML
+window.bukaCheckPoint1 = bukaCheckPoint1;
+
+// Cek otomatis saat halaman dibuka kembali
+document.addEventListener('DOMContentLoaded', function() {
+  if (typeof state !== 'undefined' && state.checkpoints && state.checkpoints.cp1) {
+    var wrapper = document.getElementById('bagian-b-wrapper');
+    var btn = document.getElementById('btn-cp1');
+    var status = document.getElementById('status-cp1');
+    if (wrapper) {
+      wrapper.style.opacity = '1';
+      wrapper.style.pointerEvents = 'auto';
+      wrapper.style.filter = 'none';
+    }
+    if (btn) {
+      btn.textContent = '✅ Check-Point 1 Selesai';
+      btn.style.backgroundColor = 'var(--secondary)';
+      btn.disabled = true;
+    }
+    if (status) status.hidden = false;
+  }
+});
+
+function bukaCheckPoint2() {
+  var wrapper = document.getElementById('bagian-c-wrapper');
+  var btn = document.getElementById('btn-cp2');
+  var status = document.getElementById('status-cp2');
+
+  if (!(state.catatanKarton && state.catatanKarton.selesai)) { tampilPesan('Temukan dulu 1 jaring-jaring yang valid ya.'); return; }
+
+  if (wrapper) {
+    wrapper.style.opacity = '1';
+    wrapper.style.pointerEvents = 'auto';
+    wrapper.style.filter = 'none';
+  }
+
+  if (btn) {
+    btn.textContent = '✅ Check-Point 2 Selesai';
+    btn.style.backgroundColor = 'var(--secondary)';
+    btn.style.cursor = 'default';
+    btn.disabled = true;
+  }
+
+  if (status) status.hidden = false;
+
+  if (typeof state !== 'undefined') {
+    if (!state.checkpoints) state.checkpoints = {};
+    state.checkpoints.cp2 = true;
+    if (typeof saveState === 'function') saveState(state);
+  }
+
+  setTimeout(function() {
+    var bagianC = document.getElementById('bagian-c-title');
+    if (bagianC) bagianC.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 200);
+}
+
+window.bukaCheckPoint2 = bukaCheckPoint2;
+
+document.addEventListener('DOMContentLoaded', function() {
+  if (typeof state !== 'undefined' && state.checkpoints && state.checkpoints.cp2) {
+    var wrapper = document.getElementById('bagian-c-wrapper');
+    var btn = document.getElementById('btn-cp2');
+    var status = document.getElementById('status-cp2');
+    if (wrapper) {
+      wrapper.style.opacity = '1';
+      wrapper.style.pointerEvents = 'auto';
+      wrapper.style.filter = 'none';
+    }
+    if (btn) {
+      btn.textContent = '✅ Check-Point 2 Selesai';
+      btn.style.backgroundColor = 'var(--secondary)';
+      btn.disabled = true;
+    }
+    if (status) status.hidden = false;
+  }
+});
+
+function selesaikanPenyelidikan() {
+  if (!(state.proporsional && state.proporsional['prop-simpul-luas'] && state.proporsional['prop-simpul-volume'])) { tampilPesan('Isi dan catat pola dulu ya.'); return; }
+  if (typeof state !== 'undefined') {
+    if (!state.checkpoints) state.checkpoints = {};
+    state.checkpoints.cp3 = true;
+    if (typeof saveState === 'function') saveState(state);
+  }
+  window.location.href = 'kubus-hasil.html';
+}
+window.selesaikanPenyelidikan = selesaikanPenyelidikan;
+</script>
+
+<script>
+/* ===== Aktivitas 2: Rotasi Mental 3 Level (MR) — soal dibangkitkan otomatis ===== */
+var ROT_SISI = ['Atas', 'Bawah', 'Depan', 'Belakang', 'Kanan', 'Kiri'];
+
+// Tiap operasi = pemetaan "logo ada di sisi X -> pindah ke sisi Y". Sisi yang tidak tercantum tidak berpindah.
+var ROT_OP = {
+  cw:  { teks: 'diputar 90° SEARAH jarum jam (dilihat dari atas)',
+         peta: { Depan: 'Kiri', Kiri: 'Belakang', Belakang: 'Kanan', Kanan: 'Depan' },
+         tip: 'Bayangkan jam dilihat dari atas, depan di posisi jam 6. Searah jarum jam: jam 6 → jam 9 (kiri) → jam 12 (belakang) → jam 3 (kanan).' },
+  ccw: { teks: 'diputar 90° BERLAWANAN arah jarum jam (dilihat dari atas)',
+         peta: { Depan: 'Kanan', Kanan: 'Belakang', Belakang: 'Kiri', Kiri: 'Depan' },
+         tip: 'Bayangkan jam dilihat dari atas, depan di posisi jam 6. Berlawanan arah jarum jam: jam 6 → jam 3 (kanan) → jam 12 (belakang) → jam 9 (kiri).' },
+  half: { teks: 'diputar 180° (setengah putaran) dilihat dari atas',
+         peta: { Depan: 'Belakang', Belakang: 'Depan', Kanan: 'Kiri', Kiri: 'Kanan' },
+         tip: 'Setengah putaran menukar sisi dengan sisi seberangnya: depan ↔ belakang dan kiri ↔ kanan. Sisi atas dan bawah tetap.' },
+  guling_depan: { teks: 'digulingkan 90° ke arah depan (sisi atas menjadi sisi depan)',
+         peta: { Atas: 'Depan', Depan: 'Bawah', Bawah: 'Belakang', Belakang: 'Atas' },
+         tip: 'Gulingkan seperti mendorong dadu ke depan: sisi atas pindah ke depan, sisi depan turun ke bawah. Sisi kiri dan kanan tidak berpindah.' },
+  guling_belakang: { teks: 'digulingkan 90° ke arah belakang (sisi atas menjadi sisi belakang)',
+         peta: { Atas: 'Belakang', Belakang: 'Bawah', Bawah: 'Depan', Depan: 'Atas' },
+         tip: 'Gulingkan seperti mendorong dadu ke belakang: sisi atas pindah ke belakang, sisi belakang turun ke bawah. Sisi kiri dan kanan tidak berpindah.' },
+  guling_kanan: { teks: 'digulingkan 90° ke arah kanan (sisi atas menjadi sisi kanan)',
+         peta: { Atas: 'Kanan', Kanan: 'Bawah', Bawah: 'Kiri', Kiri: 'Atas' },
+         tip: 'Gulingkan seperti mendorong dadu ke kanan: sisi atas pindah ke kanan, sisi kanan turun ke bawah. Sisi depan dan belakang tidak berpindah.' },
+  guling_kiri: { teks: 'digulingkan 90° ke arah kiri (sisi atas menjadi sisi kiri)',
+         peta: { Atas: 'Kiri', Kiri: 'Bawah', Bawah: 'Kanan', Kanan: 'Atas' },
+         tip: 'Gulingkan seperti mendorong dadu ke kiri: sisi atas pindah ke kiri, sisi kiri turun ke bawah. Sisi depan dan belakang tidak berpindah.' }
+};
+var ROT_GULING = ['guling_depan', 'guling_belakang', 'guling_kanan', 'guling_kiri'];
+
+var rotIdx = 0, rotSalah = 0, rotSoal = null;
+
+function rotAcak(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+function rotKocok(arr) {
+  var a = arr.slice();
+  for (var i = a.length - 1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1)), t = a[i]; a[i] = a[j]; a[j] = t;
+  }
+  return a;
+}
+function rotTerap(op, sisi) { return ROT_OP[op].peta[sisi] || sisi; }
+
+// Bangkitkan satu soal untuk level 0, 1, atau 2
+function rotBuatSoal(level) {
+  for (var coba = 0; coba < 100; coba++) {
+    var ops;
+    if (level === 0) ops = [rotAcak(['cw', 'ccw'])];
+    else if (level === 1) ops = Math.random() < 0.4 ? ['half'] : [rotAcak(ROT_GULING)];
+    else {
+      var g = rotAcak(ROT_GULING), p = rotAcak(['cw', 'ccw', 'half']);
+      ops = Math.random() < 0.5 ? [g, p] : [p, g];
+    }
+    var awal = rotAcak(ROT_SISI), s = awal, jejak = [awal], valid = true;
+    ops.forEach(function (op) {
+      var n = rotTerap(op, s);
+      if (n === s) valid = false;       // setiap langkah harus benar-benar memindahkan logo
+      s = n; jejak.push(s);
+    });
+    if (valid && s !== awal) return { awal: awal, ops: ops, jejak: jejak, jawab: s };
+  }
+}
+
+function rotTeksSoal(S, level) {
+  var t = 'Level ' + (level + 1) + ' — Awalnya logo ada di sisi ' + S.awal.toUpperCase() + '. ';
+  if (S.ops.length === 1) t += 'Kotak ' + ROT_OP[S.ops[0]].teks + '. ';
+  else t += 'Langkah 1: kotak ' + ROT_OP[S.ops[0]].teks + '. Langkah 2: kotak ' + ROT_OP[S.ops[1]].teks + '. ';
+  return t + 'Logo akhirnya menghadap ke...';
+}
+
+function rotUraian(S) {
+  var b = ['Awalnya logo di sisi ' + S.awal.toUpperCase() + '.'];
+  S.ops.forEach(function (op, i) {
+    b.push((S.ops.length > 1 ? 'Langkah ' + (i + 1) + ': ' : '') + 'kotak ' + ROT_OP[op].teks +
+           ', logo pindah ke sisi ' + S.jejak[i + 1].toUpperCase() + '.');
+  });
+  return b.join(' ');
+}
+
+// Petunjuk bertahap: tidak langsung membocorkan jawaban akhir
+function rotPetunjuk(S) {
+  if (S.ops.length === 1) return ROT_OP[S.ops[0]].tip;
+  return 'Selesaikan satu langkah dulu: setelah langkah 1, logo ada di sisi ' + S.jejak[1].toUpperCase() +
+         '. Sekarang lanjutkan langkah 2 dari posisi itu.';
+}
+
+function rotPilihan(S) {
+  var op = [S.jawab, S.awal];
+  rotKocok(ROT_SISI).forEach(function (x) { if (op.length < 4 && op.indexOf(x) === -1) op.push(x); });
+  return rotKocok(op);
+}
+
+// Gambar kubus isometrik: sisi tampak solid, rusuk tersembunyi putus-putus
+function rotGambar(sisiLogo) {
+  var W = 42, k = 24, H = 48, ox = 68, oy = 119;
+  function P(x, y, z) { return [ox + (x + y) * W, oy + (x - y) * k - z * H]; }
+  function r(n) { return Math.round(n * 10) / 10; }
+  function poly(v) { return v.map(function (p) { var q = P(p[0], p[1], p[2]); return r(q[0]) + ',' + r(q[1]); }).join(' '); }
+  function tengah(v) {
+    var sx = 0, sy = 0, sz = 0;
+    v.forEach(function (p) { sx += p[0]; sy += p[1]; sz += p[2]; });
+    var q = P(sx / 4, sy / 4, sz / 4); return [r(q[0]), r(q[1])];
+  }
+  var FACE = {
+    Atas:     [[0,0,1],[1,0,1],[1,1,1],[0,1,1]],
+    Depan:    [[0,0,0],[1,0,0],[1,0,1],[0,0,1]],
+    Kanan:    [[1,0,0],[1,1,0],[1,1,1],[1,0,1]],
+    Belakang: [[0,1,0],[1,1,0],[1,1,1],[0,1,1]],
+    Kiri:     [[0,0,0],[0,1,0],[0,1,1],[0,0,1]],
+    Bawah:    [[0,0,0],[1,0,0],[1,1,0],[0,1,0]]
+  };
+  var TEAL = { Atas: '#E6F8F5', Depan: '#C9EEE8', Kanan: '#A5DDD4' };
+  var ORANYE = { Atas: '#FFC15E', Depan: '#FF9F1C', Kanan: '#E58A0B' };
+  var tampak = ['Atas', 'Depan', 'Kanan'];
+  var tersembunyi = tampak.indexOf(sisiLogo) === -1;
+
+  var s = '<svg viewBox="0 0 220 190" role="img" aria-labelledby="rot-svg-judul rot-svg-desc" ' +
+          'style="width:100%; height:auto; max-width:280px; display:block; margin:0 auto;">';
+  s += '<title id="rot-svg-judul">Kubus bakpia dengan logo oranye di sisi ' + sisiLogo.toLowerCase() + '</title>';
+  s += '<desc id="rot-svg-desc">Kubus digambar dari arah depan-kanan-atas. Garis putus-putus adalah rusuk yang ' +
+       'tersembunyi di balik kubus. ' + (tersembunyi
+         ? 'Logo ada di sisi ' + sisiLogo.toLowerCase() + ' yang tidak terlihat, digambar tembus pandang.'
+         : 'Logo terlihat di sisi ' + sisiLogo.toLowerCase() + '.') + '</desc>';
+
+  // bayangan alas
+  s += '<ellipse cx="' + (ox + W) + '" cy="' + (oy + 8) + '" rx="58" ry="20" fill="#0b3d38" opacity=".10"/>';
+
+  // tiga sisi yang terlihat
+  tampak.forEach(function (n) {
+    var logo = (n === sisiLogo);
+    s += '<polygon points="' + poly(FACE[n]) + '" fill="' + (logo ? ORANYE[n] : TEAL[n]) +
+         '" stroke="#197269" stroke-width="2" stroke-linejoin="round"/>';
+  });
+
+  // rusuk tersembunyi (tiga rusuk yang bertemu di sudut belakang-kiri-bawah)
+  [[[0,1,0],[1,1,0]], [[0,1,0],[0,0,0]], [[0,1,0],[0,1,1]]].forEach(function (e) {
+    var a = P(e[0][0], e[0][1], e[0][2]), b = P(e[1][0], e[1][1], e[1][2]);
+    s += '<line x1="' + r(a[0]) + '" y1="' + r(a[1]) + '" x2="' + r(b[0]) + '" y2="' + r(b[1]) +
+         '" stroke="#197269" stroke-width="1.6" stroke-dasharray="5 4" stroke-linecap="round" opacity=".7"/>';
+  });
+
+  // logo di sisi tersembunyi: lapisan tembus pandang bergaris putus-putus
+  if (tersembunyi) {
+    var c2 = tengah(FACE[sisiLogo]);
+    s += '<polygon points="' + poly(FACE[sisiLogo]) + '" fill="#FF9F1C" fill-opacity=".42" stroke="#B45F00" stroke-width="2" stroke-dasharray="5 4" stroke-linejoin="round"/>';
+    s += '<text x="' + c2[0] + '" y="' + (c2[1] + 4) + '" text-anchor="middle" font-size="12" font-weight="800" fill="#3b2200">LOGO</text>';
+  }
+
+  // label sisi yang terlihat
+  tampak.forEach(function (n) {
+    var c = tengah(FACE[n]);
+    if (n === sisiLogo) {
+      s += '<text x="' + c[0] + '" y="' + (c[1] + 4) + '" text-anchor="middle" font-size="12" font-weight="800" fill="#3b2200">LOGO</text>';
+    } else {
+      s += '<text x="' + c[0] + '" y="' + (c[1] + 3) + '" text-anchor="middle" font-size="9" font-weight="700" fill="#197269" opacity=".85">' + n.toUpperCase() + '</text>';
+    }
+  });
+  return s + '</svg>';
+}
+
+function rotRender() {
+  rotSalah = 0;
+  rotSoal = rotBuatSoal(rotIdx);
+  document.getElementById('rot-level-info').textContent = 'Level ' + (rotIdx + 1) + ' dari 3' + (rotIdx === 2 ? ' ⭐ Ekstra' : '');
+  document.getElementById('rot-gambar').innerHTML = rotGambar(rotSoal.awal);
+  document.getElementById('rot-soal').textContent = rotTeksSoal(rotSoal, rotIdx);
+  var box = document.getElementById('rot-opsi'); box.innerHTML = '';
+  rotPilihan(rotSoal).forEach(function (o) {
+    var b = document.createElement('button');
+    b.className = 'btn-ghost'; b.textContent = o;
+    b.onclick = function () { rotJawab(b, o); };
+    box.appendChild(b);
+  });
+  ['feedback-rotasi-visual', 'btn-rot-lanjut', 'btn-rot-ulang', 'btn-verifikasi-rotasi', 'kotak-verifikasi-rot'].forEach(function (id) {
+         var bl = document.getElementById('btn-rot-lanjut'); if (bl) bl.textContent = (rotIdx === 1) ? 'Lanjut ke Level 3 ⭐ (Ekstra)' : 'Lanjut ke Level Berikutnya →';
+  });
+}
+
+function rotJawab(btn, o) {
+  var S = rotSoal, fb = document.getElementById('feedback-rotasi-visual');
+  fb.hidden = false;
+  if (o === S.jawab) {
+    fb.className = 'feedback feedback-success';
+        fb.textContent = 'Tepat! ' + rotUraian(S) + (rotIdx === 1 ? ' Level wajib selesai! Level 3 adalah tantangan ekstra.' : (rotIdx === 2 ? ' Ketiga level selesai!' : ''));
+    if (rotIdx >= 1 && typeof state !== 'undefined') { state.rotWajib = true; saveState(state); }
+    document.querySelectorAll('#rot-opsi button').forEach(function (b) { b.disabled = true; });
+    btn.style.background = 'var(--secondary)'; btn.style.color = '#fff';
+    var next = document.getElementById(rotIdx < 2 ? 'btn-rot-lanjut' : 'btn-rot-ulang');
+    next.hidden = false;
+    var bv2 = document.getElementById('btn-verifikasi-rotasi'); if (bv2) bv2.hidden = false;
+    try { next.focus({ preventScroll: true }); } catch (e) {}
+  } else {
+    rotSalah++; btn.disabled = true; btn.style.opacity = '.4';
+    fb.className = 'feedback feedback-retry';
+    fb.textContent = rotSalah === 1 ? 'Belum tepat — coba lagi, tidak ada batas percobaan.' : 'Petunjuk: ' + rotPetunjuk(S);
+       if (rotSalah >= 2) { var bv = document.getElementById('btn-verifikasi-rotasi'); if (bv) bv.hidden = false; }
+  }
+}
+
+function rotLanjut() {
+  rotIdx = Math.min(rotIdx + 1, 2);
+  if (typeof state !== 'undefined') { state.rotLevel = rotIdx; saveState(state); }
+  rotRender();
+}
+
+// Setelah Level 3 selesai: ulangi dari Level 1 dengan soal baru
+function rotUlang() {
+  rotIdx = 0;
+  if (typeof state !== 'undefined') { state.rotLevel = 0; saveState(state); }
+  rotRender();
+  document.getElementById('rot-level-info').scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+window.addEventListener('load', function () {
+  if (typeof state !== 'undefined' && state.rotLevel) rotIdx = Math.min(state.rotLevel, 2);
+  rotRender();
+});
+window.rotLanjut = rotLanjut;
+window.rotUlang = rotUlang;
+
+/* ===== Aktivitas 2: bukti rotasi di GeoGebra (dibangun saat tombol diklik) ===== */
+var ggbApiRot = null, rotSgn = 1, rotSudahKalibrasi = false, animRotId = null;
+var ROT_ZOOM = 1.3, ROT_PUSAT = '(0,0,-0.4)';   // zoom-out dan titik pusat pandang (setel jika perlu)
+var ROT_AKSI = { cw:['z',-90], ccw:['z',90], half:['z',180],
+                 guling_depan:['x',90], guling_belakang:['x',-90], guling_kanan:['y',90], guling_kiri:['y',-90] };
+var ROT_BIDANG = {
+  Atas:[[-1,-1,1],[1,-1,1],[1,1,1],[-1,1,1]],     Bawah:[[-1,-1,-1],[1,-1,-1],[1,1,-1],[-1,1,-1]],
+  Depan:[[-1,-1,-1],[1,-1,-1],[1,-1,1],[-1,-1,1]], Belakang:[[-1,1,-1],[1,1,-1],[1,1,1],[-1,1,1]],
+  Kanan:[[1,-1,-1],[1,1,-1],[1,1,1],[1,-1,1]],    Kiri:[[-1,-1,-1],[-1,1,-1],[-1,1,1],[-1,-1,1]]
+};
+var ROT_WARNA = { Atas:[225,248,245], Bawah:[150,210,202], Depan:[200,238,232], Belakang:[170,222,214], Kanan:[185,230,223], Kiri:[212,241,236] };
+function rotVn(p) { return 'V' + (p[0] > 0 ? 1 : 0) + (p[1] > 0 ? 1 : 0) + (p[2] > 0 ? 1 : 0); }
+
+function bangunRot() {
+  var api = ggbApiRot; if (!api || !rotSoal) return;
+  api.getAllObjectNames().forEach(function (n) { try { api.deleteObject(n); } catch (e) {} });
+  ['x', 'y', 'z'].forEach(function (s) {
+    api.evalCommand('ax' + s + '=Line((0,0,0),(' + (s === 'x' ? 1 : 0) + ',' + (s === 'y' ? 1 : 0) + ',' + (s === 'z' ? 1 : 0) + '))');
+    api.setVisible('ax' + s, false);
+  });
+  if (!rotSudahKalibrasi) {          // pastikan +90° pada sumbu tegak memindahkan DEPAN ke KANAN
+    api.evalCommand('uji=Rotate((0,-1,0),90°,axz)');
+    rotSgn = api.getXcoord('uji') > 0 ? 1 : -1;
+    api.deleteObject('uji'); rotSudahKalibrasi = true;
+  }
+  var a1 = ROT_AKSI[rotSoal.ops[0]], a2 = rotSoal.ops[1] ? ROT_AKSI[rotSoal.ops[1]] : null;
+  api.evalCommand('t1=0'); api.evalCommand('t2=0');
+  for (var i = 0; i < 8; i++) {
+    var p = [(i & 4) ? 1 : -1, (i & 2) ? 1 : -1, (i & 1) ? 1 : -1];
+    var e = 'Rotate((' + p.join(',') + '),t1*(' + (rotSgn * a1[1]) + '°),ax' + a1[0] + ')';
+    if (a2) e = 'Rotate(' + e + ',t2*(' + (rotSgn * a2[1]) + '°),ax' + a2[0] + ')';
+    api.evalCommand(rotVn(p) + '=' + e);
+    api.setVisible(rotVn(p), false);
+  }
+  ROT_SISI.forEach(function (s) {
+    api.evalCommand('f' + s + '=Polygon(' + ROT_BIDANG[s].map(rotVn).join(',') + ')');
+    var c = (s === rotSoal.awal) ? [255, 159, 28] : ROT_WARNA[s];
+    api.setColor('f' + s, c[0], c[1], c[2]); api.setFilling('f' + s, 0.9);
+  });
+  [['DEPAN', '(-0.6,-2.4,-1)'], ['BELAKANG', '(-1,2.4,-1)'], ['KANAN', '(2.1,0,-1)'], ['KIRI', '(-3,0,-1)']].forEach(function (t, i) {
+    api.evalCommand('tx' + i + '=Text("' + t[0] + '",' + t[1] + ')');
+  });
+  api.getAllObjectNames().forEach(function (n) {
+    api.setLabelVisible(n, false);
+    if (/segment/.test(api.getObjectType(n))) { api.setColor(n, 25, 80, 90); api.setLineThickness(n, 3); }
+  });
+  api.evalCommand('SetViewDirection((-0.5,1,-0.7))');
+  pusatkanGgb(api, ROT_PUSAT);
+  api.evalCommand('ZoomOut(' + ROT_ZOOM + ')');
+  var s = document.getElementById('slider-rot'); if (s) s.value = 0;
+  var inf = document.getElementById('info-rot');
+    if (inf) inf.textContent = 'Geser penggeser untuk memutar kotak. Sisi oranye = sisi berlogo.';
+}
+
+function verifikasiRotasi() {
+  var box = document.getElementById('kotak-verifikasi-rot'); if (!box || !rotSoal) return;
+  box.hidden = false;
+  if (!ggbApiRot) {
+    new GGBApplet({
+      appName: '3d', width: lebarGgb('ggb-rotasi', 560), height: window.innerWidth < 600 ? 380 : 460,
+      showToolBar: false, showAlgebraInput: false, showAlgebraView: false, showMenuBar: false,
+      showResetIcon: false, showGrid: false, showAxes: false, enableRightClick: false, borderColor: 'none',
+      appletOnLoad: function (api) {
+        api.setPerspective('T');
+        ggbApiRot = api;
+        api.setVisible('xAxis', false); api.setVisible('yAxis', false);
+        api.setVisible('zAxis', false); api.setVisible('xOyPlane', false);
+        bangunRot();
+      }
+    }, true).inject('ggb-rotasi');
+  } else { bangunRot(); }
+  box.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+function aturRot(val) {
+  if (!ggbApiRot || !rotSoal) return;
+  var u = (Number(val) / 100) * rotSoal.ops.length;
+  ggbApiRot.setValue('t1', Math.min(u, 1));
+  ggbApiRot.setValue('t2', Math.max(u - 1, 0));
+  var inf = document.getElementById('info-rot');
+  if (inf && Number(val) >= 100) inf.textContent = 'Logo kini di sisi ' + rotSoal.jawab.toUpperCase() + '. Cocok dengan jawabanmu?';
+}
+
+function animasiRot(target) {
+  var s = document.getElementById('slider-rot');
+  clearInterval(animRotId);
+  if (Number(s.value) === target) return;
+  animRotId = setInterval(function () {
+    var v = Number(s.value) + (target > Number(s.value) ? 1 : -1);
+    s.value = v; aturRot(v);
+    if (v === target) clearInterval(animRotId);
+  }, 25);
+}
+window.verifikasiRotasi = verifikasiRotasi; window.aturRot = aturRot; window.animasiRot = animasiRot;
+
+// === LOGIKA KUIS TEBAK SISI WARNA DINAMIS ===
+  var WARNA = {
+    Merah:  { rgb: [231, 76, 60],  hex: '#e74c3c' },
+    Biru:   { rgb: [52, 152, 219], hex: '#3498db' },
+    Hijau:  { rgb: [46, 204, 113], hex: '#2ecc71' },
+    Kuning: { rgb: [241, 196, 15], hex: '#f1c40f' },
+    Ungu:   { rgb: [155, 89, 182], hex: '#9b59b6' },
+    Jingga: { rgb: [230, 126, 34], hex: '#e67e22' }
+  };
+
+  // [nama, gx, gy]; gx/gy = pojok kiri-bawah tiap persegi di grid
+  var DAFTAR_JARING = [
+    { judul: 'Cross (1-4-1)',   sel: [['Merah',-2,0],['Biru',-1,0],['Hijau',0,0],['Kuning',1,0],['Ungu',-1,1],['Jingga',-1,-1]] },
+    { judul: 'Tangga (2-2-2)',  sel: [['Merah',0,0],['Biru',1,0],['Hijau',1,1],['Kuning',2,1],['Ungu',2,2],['Jingga',3,2]] },
+    { judul: 'Tiga-tiga (3-3)', sel: [['Merah',0,1],['Biru',1,1],['Hijau',2,1],['Kuning',2,0],['Ungu',3,0],['Jingga',4,0]] }
+  ];
+
+  var JARING = [];            // jaring yang sedang tampil
+  var OFFX = 0, OFFY = 0;     // supaya jaring selalu berpusat di (0,0)
+  var jaringSebelumnya = -1;
+  var soalWarnaAktif = null;
+  var ggbApiWarna = null;
+
+  function titikGGB(gx, gy) { return '(' + (gx - OFFX) + ',' + (gy - OFFY) + ',0)'; }
+  function sudutPersegi(f) {
+    return [[f.gx, f.gy], [f.gx + 1, f.gy], [f.gx + 1, f.gy + 1], [f.gx, f.gy + 1]];
+  }
+  function bertetangga(a, b) { return Math.abs(a.gx - b.gx) + Math.abs(a.gy - b.gy) === 1; }
+  function sisiBersama(a, b) {
+    var sb = sudutPersegi(b);
+    return sudutPersegi(a).filter(function (p) {
+      return sb.some(function (q) { return q[0] === p[0] && q[1] === p[1]; });
+    });
+  }
+
+  // Hitung pasangan berhadapan dengan menggelindingkan kubus di atas jaring
+  function hitungPasangan(jaring) {
+    var peta = {};
+    jaring.forEach(function (f) { peta[f.gx + ',' + f.gy] = f; });
+    var lawan = { 0: 1, 1: 0, 2: 3, 3: 2, 4: 5, 5: 4 };
+    var faceDi = {}, ada = {};
+    var mulai = jaring[0];
+    ada[mulai.gx + ',' + mulai.gy] = true;
+    faceDi[0] = mulai.nama;
+    var tumpuk = [{ f: mulai, s: [0, 1, 2, 3, 4, 5] }];   // [bawah, atas, utara, selatan, timur, barat]
+    while (tumpuk.length) {
+      var cur = tumpuk.pop();
+      [[1, 0], [-1, 0], [0, 1], [0, -1]].forEach(function (d) {
+        var k = (cur.f.gx + d[0]) + ',' + (cur.f.gy + d[1]);
+        var o = peta[k];
+        if (!o || ada[k]) return;
+        ada[k] = true;
+        var s = cur.s, b = s[0], t = s[1], n = s[2], so = s[3], e = s[4], w = s[5], ns;
+        if (d[0] === 1)       ns = [e, w, n, so, t, b];
+        else if (d[0] === -1) ns = [w, e, n, so, b, t];
+        else if (d[1] === 1)  ns = [n, so, t, b, e, w];
+        else                  ns = [so, n, b, t, e, w];
+        faceDi[ns[0]] = o.nama;
+        tumpuk.push({ f: o, s: ns });
+      });
+    }
+    var hasil = {};
+    Object.keys(faceDi).forEach(function (id) { hasil[faceDi[id]] = faceDi[lawan[id]]; });
+    return hasil;
+  }
+
+  function acakSoalWarna() {
+    // pilih jenis jaring baru (tidak sama dengan sebelumnya)
+    var i;
+    do { i = Math.floor(Math.random() * DAFTAR_JARING.length); }
+    while (i === jaringSebelumnya && DAFTAR_JARING.length > 1);
+    jaringSebelumnya = i;
+
+    JARING = DAFTAR_JARING[i].sel.map(function (s) {
+      return { nama: s[0], gx: s[1], gy: s[2], rgb: WARNA[s[0]].rgb };
+    });
+    var xs = JARING.map(function (f) { return f.gx; });
+    var ys = JARING.map(function (f) { return f.gy; });
+    OFFX = (Math.min.apply(null, xs) + Math.max.apply(null, xs) + 1) / 2;
+    OFFY = (Math.min.apply(null, ys) + Math.max.apply(null, ys) + 1) / 2;
+
+    // pilih sisi alas, lalu cari lawannya dari bentuk jaring
+    var pasangan = hitungPasangan(JARING);
+    var alas = JARING[Math.floor(Math.random() * JARING.length)].nama;
+    soalWarnaAktif = { alas: alas, tutup: pasangan[alas], kodeWarna: WARNA[alas].hex };
+
+    var spanWarna = document.getElementById('warna-alas');
+    spanWarna.textContent = soalWarnaAktif.alas.toUpperCase();
+        spanWarna.style.background = soalWarnaAktif.kodeWarna;
+    spanWarna.style.color = (['Kuning', 'Hijau', 'Jingga'].indexOf(soalWarnaAktif.alas) >= 0) ? '#1f1500' : '#fff';
+    spanWarna.style.padding = '2px 10px'; spanWarna.style.borderRadius = '6px';
+    document.getElementById('feedback-warna').style.display = 'none';
+
+    bangunLipatan(alas);
+    var sl = document.getElementById('slider-lipat'); if (sl) sl.value = 0;
+    var kl = document.getElementById('kontrol-lipat'); if (kl) kl.hidden = true;
+  }
+
+  function cekTebakanWarna(jawabanSiswa) {
+    if (!soalWarnaAktif) return;
+
+    const feedback = document.getElementById('feedback-warna');
+    feedback.style.display = 'block';
+    document.getElementById('kontrol-lipat').hidden = false;
+
+    if (jawabanSiswa === soalWarnaAktif.tutup) {
+      feedback.style.backgroundColor = '#d4edda';
+      feedback.style.color = '#155724';
+      feedback.style.border = '1px solid #c3e6cb';
+      feedback.innerHTML = `✅ <strong>Tepat sekali!</strong> Sisi ${soalWarnaAktif.alas} berhadapan dengan sisi ${soalWarnaAktif.tutup}. Bayangan ruangmu sangat bagus!`;
+    } else {
+      feedback.style.backgroundColor = '#f8d7da';
+      feedback.style.color = '#721c24';
+      feedback.style.border = '1px solid #f5c6cb';
+      feedback.innerHTML = `❌ <strong>Belum tepat.</strong> Sisi ${jawabanSiswa} tidak berhadapan dengan sisi ${soalWarnaAktif.alas}. Coba bayangkan pelipatan jaring-jaringnya secara perlahan!`;
+    }
+  }
+
+  // Bangun ulang lipatan dengan sisi 'akar' sebagai alas yang diam
+  function bangunLipatan(akar) {
+    var api = ggbApiWarna;
+    if (!api) return;                       // aplet belum siap; dipanggil lagi di appletOnLoad
+    var c = function (cmd) { api.evalCommand(cmd); };
+    var a = '(tWarna*90°)';
+
+    // hapus objek lama (kecuali slider)
+    api.getAllObjectNames().forEach(function (n) {
+      if (n === 'tWarna' || /Axis$|Plane$/.test(n)) return;
+      try { api.deleteObject(n); } catch (e) {}
+    });
+    api.setValue('tWarna', 0);
+
+    var byName = {};
+    JARING.forEach(function (f) { byName[f.nama] = f; });
+
+    // pohon lipatan dari akar (BFS)
+    var induk = {}, dikunjungi = {}, antrean = [byName[akar]];
+    dikunjungi[akar] = true;
+    while (antrean.length) {
+      var cur = antrean.shift();
+      JARING.forEach(function (o) {
+        if (!dikunjungi[o.nama] && bertetangga(cur, o)) {
+          dikunjungi[o.nama] = true; induk[o.nama] = cur.nama; antrean.push(o);
+        }
+      });
+    }
+
+    // persegi datar
+    JARING.forEach(function (f) {
+      var s = sudutPersegi(f).map(function (p) { return titikGGB(p[0], p[1]); });
+      c('p' + f.nama + ' = Polygon(' + s.join(',') + ')');
+    });
+
+    // engsel antara tiap sisi dan induknya (arah dipilih agar melipat ke atas)
+    JARING.forEach(function (f) {
+      if (!induk[f.nama]) return;
+      var p = byName[induk[f.nama]];
+      var sb = sisiBersama(p, f), A = sb[0], B = sb[1];
+      var dx = B[0] - A[0], dy = B[1] - A[1];
+      var nx = (f.gx + 0.5) - (A[0] + B[0]) / 2, ny = (f.gy + 0.5) - (A[1] + B[1]) / 2;
+      if (dx * ny - dy * nx < 0) { var tmp = A; A = B; B = tmp; }
+      c('h_' + f.nama + ' = Line(' + titikGGB(A[0], A[1]) + ',' + titikGGB(B[0], B[1]) + ')');
+    });
+
+    // rotasi berantai: dari engsel sisi itu sendiri sampai engsel di dekat akar
+    var helper = [], hasil = {};
+    JARING.forEach(function (f) {
+      if (f.nama === akar) { hasil[f.nama] = 'p' + f.nama; return; }
+      helper.push('p' + f.nama);
+      var rantai = [], n = f.nama;
+      while (induk[n]) { rantai.push('h_' + n); n = induk[n]; }
+      var obj = 'p' + f.nama;
+      rantai.forEach(function (h, i) {
+        var nm = (i === rantai.length - 1) ? 'f' + f.nama : 't' + f.nama + i;
+        c(nm + ' = Rotate(' + obj + ', ' + a + ', ' + h + ')');
+        if (i < rantai.length - 1) helper.push(nm);
+        obj = nm;
+      });
+      hasil[f.nama] = 'f' + f.nama;
+      helper.push('h_' + f.nama);
+    });
+
+    // warna
+    JARING.forEach(function (f) {
+      api.setColor(hasil[f.nama], f.rgb[0], f.rgb[1], f.rgb[2]);
+      api.setFilling(hasil[f.nama], 1);
+    });
+
+    // rapikan
+    helper.forEach(function (n) { api.setVisible(n, false); });
+    api.getAllObjectNames().forEach(function (n) {
+      api.setLabelVisible(n, false);
+      var t = api.getObjectType(n);
+      if (t === 'point' || t === 'point3d' || t === 'segment' || t === 'segment3d') api.setVisible(n, false);
+    });
+    api.setVisible('tWarna', false);
+  }
+
+  function muatJaringKubusWarna() {
+    var wadah = document.getElementById('ggb-net-warna');
+    if (!wadah || wadah.dataset.dimuat === '1') return;
+    wadah.dataset.dimuat = '1';
+
+    var params = {
+      appName: '3d',
+      width: Math.min(wadah.clientWidth || 700, 700),
+      height: 450,
+      showToolBar: false, showAlgebraInput: false, showAlgebraView: false,
+      showMenuBar: false, showResetIcon: false, showGrid: false, showAxes: false,
+      enableRightClick: false, borderColor: 'none',
+      appletOnLoad: function (api) {
+        ggbApiWarna = api;
+        api.setPerspective('T');
+        api.evalCommand('tWarna = Slider(0, 1, 0.01)');
+        bangunLipatan(soalWarnaAktif ? soalWarnaAktif.alas : JARING[0].nama);
+
+        api.setVisible('xAxis', false); api.setVisible('yAxis', false); api.setVisible('zAxis', false);
+        try { api.evalXML('<euclidianView3D><plate show="false"/></euclidianView3D>'); } catch (e) {}
+        api.evalCommand('SetViewDirection((0.3,1,-1))');
+        pusatkanGgb(api, '(0,0,-0.3)');
+        api.evalCommand('ZoomIn(1.3)');
+      }
+    };
+    new GGBApplet(params, true).inject('ggb-net-warna');
+  }
+
+  // kontrol lipat
+  function aturLipat(v) { if (ggbApiWarna) ggbApiWarna.setValue('tWarna', Number(v)); }
+  var animLipatId = null;
+  function animasiLipat(target) {
+    var s = document.getElementById('slider-lipat');
+    clearInterval(animLipatId);
+    animLipatId = setInterval(function () {
+      var v = Number(s.value) / 100;
+      var step = 0.02 * (target > v ? 1 : -1);
+      v += step;
+      if ((step > 0 && v >= target) || (step < 0 && v <= target)) { v = target; clearInterval(animLipatId); }
+      s.value = v * 100;
+      aturLipat(v);
+    }, 20);
+  }
+  window.aturLipat = aturLipat;
+  window.animasiLipat = animasiLipat;
+  window.cekTebakanWarna = cekTebakanWarna;
+  window.acakSoalWarna = acakSoalWarna;
+
+  // Satu listener saja
+  window.addEventListener('load', function () {
+    acakSoalWarna();            // siapkan soal & jaring dulu
+    muatJaringKubusWarna();     // lalu muat aplet (appletOnLoad akan membangun lipatannya)
+  });
+</script>
+<script type="module" src="shared.js"></script>
+</body>
+</html>

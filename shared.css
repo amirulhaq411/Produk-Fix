@@ -1,0 +1,360 @@
+/* ==========================================================================
+   shared.css (Tema GeoCeria)
+   ========================================================================== */
+/* Memanggil font Nunito langsung dari CSS */
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=IBM+Plex+Mono:wght@500&display=swap');
+
+:root {
+  /* Palet Warna GeoCeria */
+  --primary: #FF9F1C;      /* Oranye utama (Aksen / Aktif) */
+  --primary-light: #FFBF69;
+  --secondary: #2EC4B6;    /* Teal utama (Header / Selesai) */
+  --secondary-dark: #239b90;
+  
+  --bg: #FDFFFC;           /* Latar belakang halaman cerah */
+  --surface: #FFFFFF;      /* Latar kartu/modul putih bersih */
+  --border: #E2E5EB;
+  --ink: #011627;          /* Teks gelap */
+  --muted: #666666;
+  
+  --accent: #FFBF69;
+  --accent-dark: #FF9F1C;
+  --success: #2EC4B6;
+  --success-bg: #EAF9F8;
+  --warn-bg: #FFF5E6;      /* Latar petunjuk/peringatan (soft orange) */
+  
+  --font-display: 'Nunito', sans-serif;
+  --font-body: 'Nunito', sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+
+  --radius: 20px;
+  --radius-sm: 12px;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  line-height: 1.6;
+}
+
+h1, h2, h3 {
+  font-family: var(--font-display);
+  font-weight: 800;
+  color: var(--secondary); /* Judul menggunakan warna Teal */
+  margin: 0 0 .5em;
+}
+
+a { color: var(--primary); text-decoration: none; font-weight: 700; }
+a:hover { color: var(--secondary); }
+
+.eyebrow {
+  font-weight: 800;
+  font-size: .85rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--primary);
+}
+
+/* ---- Badge Fase (Pengganti Sidebar Rail) ---- */
+.fase-badge {
+  display: inline-block;
+  background: var(--warn-bg);
+  color: var(--accent-dark);
+  font-weight: 800;
+  font-size: 0.9rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 6px 16px;
+  border-radius: 50px;
+  margin-bottom: 1.25rem;
+  border: 2px solid var(--accent);
+  box-shadow: 0 4px 6px rgba(255,159,28,0.15);
+}
+
+/* ---- Shell / Navigasi Atas ---- */
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 5%;
+  background: var(--secondary); /* Mengikuti navbar index.html */
+  color: white;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+.topbar a { color: white; margin-left: 20px; transition: color 0.3s; }
+.topbar a:hover { color: var(--primary); }
+.topbar .brand { font-size: 1.5rem; font-weight: 900; letter-spacing: 1px; }
+
+.wrap {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 2rem 5% 4rem;
+}
+
+/* ---- Bagian Judul Modul (Hero) ---- */
+.hero {
+  padding: 2rem 0;
+  border-bottom: 2px dashed var(--border);
+  margin-bottom: 2.5rem;
+  text-align: center;
+}
+.hero h1 { font-size: 2.5rem; color: var(--primary); }
+.hero p { color: var(--muted); max-width: 650px; margin: 0 auto; font-size: 1.1rem; }
+
+/* ---- Kartu Pemilih Modul (kubus.html, dll) ---- */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 25px;
+}
+.module-card {
+  background: var(--surface);
+  padding: 2rem 1.5rem;
+  border-radius: var(--radius);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+  border-bottom: 5px solid var(--secondary);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  transition: transform 0.3s, border-color 0.3s;
+}
+.module-card h3 { color: var(--ink); margin-top: 0.5rem; font-size: 1.5rem; }
+.module-card p { color: var(--muted); margin-bottom: 0; }
+.module-card:hover { transform: translateY(-10px); border-bottom-color: var(--primary); }
+
+.module-card .step-no {
+  font-weight: 800;
+  color: var(--primary);
+  font-size: .9rem;
+  background: var(--warn-bg);
+  padding: 4px 12px;
+  border-radius: 20px;
+  margin-bottom: 10px;
+}
+.module-card.disabled { 
+  opacity: .5; filter: grayscale(1); pointer-events: none; border-bottom-color: var(--border); 
+}
+
+/* ---- Tata Letak Modul (PBL Rail + Konten) ---- */
+.module-layout {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: 2.5rem;
+  align-items: start;
+}
+@media (max-width: 768px) {
+  .module-layout { grid-template-columns: 1fr; }
+}
+
+/* ---- Navigasi Samping (Rail Progress) Diperbarui ---- */
+.rail {
+  position: relative;
+  padding-left: 2rem;
+  border-left: 3px solid var(--border); /* Garis solid agar lebih tegas */
+}
+.rail-step {
+  position: relative;
+  padding: 1rem 0 1rem 1rem;
+  color: var(--muted);
+  font-weight: 600;
+  font-size: 1rem;
+  transition: color 0.3s;
+}
+/* Bulatan Indikator Fase */
+.rail-step::before {
+  content: '';
+  position: absolute;
+  left: -2.4rem; /* Menyesuaikan posisi ke atas garis */
+  top: 1.15rem;
+  width: 16px; 
+  height: 16px;
+  border-radius: 50%;
+  background: var(--bg);
+  border: 3px solid var(--border);
+  transition: all 0.3s ease;
+}
+/* Fase yang sudah dilewati (Selesai -> Teal) */
+.rail-step.done { color: var(--secondary); }
+.rail-step.done::before { background: var(--secondary); border-color: var(--secondary); }
+/* Fase yang sedang dikerjakan (Aktif -> Oranye Menyala) */
+.rail-step.active { color: var(--primary); font-weight: 800; font-size: 1.05rem; }
+.rail-step.active::before { 
+  background: var(--primary); 
+  border-color: var(--primary); 
+  box-shadow: 0 0 0 6px rgba(255,159,28,0.2); /* Efek lingkaran cahaya/glow */
+}
+
+/* ---- Kartu Konten Fase ---- */
+.phase {
+  background: var(--surface);
+  border-radius: var(--radius);
+  padding: 2.5rem;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.04); /* Bayangan sangat lembut agar terlihat melayang */
+}
+.phase h2 { color: var(--primary); }
+.phase[hidden] { display: none; }
+
+/* Komponen Istilah (Term Chip) */
+.term-chip { 
+  margin-bottom: 0.8rem; /* Memberikan jarak antar tombol agar tidak mepet */
+}
+.term-chip summary {
+  cursor: pointer;
+  font-weight: 700;
+  color: white;
+  background: var(--secondary);
+  padding: .5rem 1.2rem;
+  border-radius: 50px;
+  display: inline-block;
+  transition: background 0.3s;
+  outline: none;
+}
+.term-chip summary:hover { background: var(--secondary-dark); }
+.term-chip[open] summary { background: var(--primary); }
+.term-chip[open] { margin-bottom: 1.2rem; /* Jarak ekstra saat penjelasan terbuka */ }
+
+/* Kontainer penjelasan di dalam chip */
+.term-chip-content { 
+  display: flex; 
+  gap: 12px; 
+  align-items: center; 
+  margin: .8rem 0 0 .5rem; 
+  padding-left: 12px; 
+  border-left: 3px solid var(--primary); 
+}
+.term-chip-content p { margin: 0; color: var(--muted); line-height: 1.4; }
+
+.task-list { padding-left: 1.2rem; font-size: 1.05rem; }
+.task-list li { margin-bottom: .6rem; }
+
+/* Frame 3D GeoGebra */
+.ggb-frame {
+  border: 2px solid var(--border);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  margin: 1.5rem 0;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+.ggb-caption { font-size: .9rem; color: var(--muted); margin-top: -.5rem; }
+
+/* Input Jawaban */
+.answer-row { display: flex; gap: .8rem; align-items: center; flex-wrap: wrap; margin: 1rem 0; }
+input[type="text"], textarea {
+  font-family: var(--font-body);
+  border: 2px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: .75rem 1rem;
+  font-size: 1rem;
+  transition: border-color 0.3s;
+  outline: none;
+}
+input[type="text"]:focus, textarea:focus { border-color: var(--secondary); }
+textarea { width: 100%; min-height: 100px; resize: vertical; }
+
+/* ---- Tombol (Pill Shape ala GeoCeria) ---- */
+button, a.btn-primary, a.btn-ghost {
+  font-family: var(--font-body);
+  font-weight: 700;
+  border: none;
+  border-radius: 50px;
+  padding: .75rem 1.5rem;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: transform 0.3s, background-color 0.3s, box-shadow 0.3s;
+}
+/* Tombol Lanjut/Cek Jawaban (Oranye) */
+.btn-primary { 
+  background: var(--primary); 
+  color: white; 
+  box-shadow: 0 4px 10px rgba(255,159,28,0.3);
+}
+.btn-primary:hover { background: #f79000; transform: translateY(-3px); box-shadow: 0 6px 15px rgba(255,159,28,0.4); }
+
+/* Tombol Kembali (Teal Outline) */
+.btn-ghost { 
+  background: transparent; 
+  color: var(--secondary); 
+  border: 2px solid var(--secondary); 
+}
+.btn-ghost:hover { background: var(--secondary); color: white; transform: translateY(-3px); }
+
+/* Tombol Bantuan (Kecil) */
+.btn-hint { background: var(--warn-bg); color: var(--accent-dark); box-shadow: none; padding: .5rem 1rem; }
+.btn-hint:hover { background: #ffe6c2; }
+
+.step-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 2px dashed var(--border);
+}
+
+/* ---- Umpan Balik (Feedback) & Petunjuk (Hint) ---- */
+.feedback {
+  border-radius: var(--radius-sm);
+  padding: 1rem;
+  font-size: 1rem;
+  margin-top: .5rem;
+  font-weight: 600;
+}
+.feedback-success { background: var(--success-bg); color: #1c7a70; border-left: 4px solid var(--secondary); }
+.feedback-retry { background: var(--warn-bg); color: #a66600; border-left: 4px solid var(--primary); }
+
+.hint-level {
+  border-left: 4px solid var(--primary);
+  background: var(--warn-bg);
+  padding: .8rem 1rem;
+  margin-top: .5rem;
+  font-size: .95rem;
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+
+.journal-status { color: var(--secondary); font-size: .9rem; font-weight: 700; margin-top: .5rem; }
+.effort-note { font-weight: 700; font-size: .95rem; color: var(--secondary); }
+
+/* Styling Khusus Catatan LKPD */
+.lkpd-prompt {
+  background: var(--warn-bg); 
+  border-left: 4px solid var(--primary); 
+  padding: 1rem; 
+  margin: 1.5rem 0; 
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+/* ---- Penyesuaian Responsif untuk Smartphone / Layar Kecil ---- */
+@media (max-width: 768px) {
+  /* Mengecilkan tinggi frame GeoGebra 3D di HP agar tidak terlalu panjang ke bawah */
+  .ggb-frame {
+    height: auto !important;
+  }
+  
+  /* Membuat kotak input teks menyesuaikan lebar layar HP */
+  input[type="text"]:not([size]), textarea {
+    width: 100% !important;
+  }
+
+  /* Menyesuaikan padding container utama di HP */
+  .wrap {
+    padding: 1rem 3% 3rem;
+  }
+  
+  .phase {
+    padding: 1.5rem 1rem;
+  }
+}
+
+html { -webkit-text-size-adjust: 100%; }
+button, .btn-primary, .btn-ghost { min-height: 44px; min-width: 44px; }
+input, textarea, select { font-size: 16px; }
+:focus-visible { outline: 3px solid #1b6ec2; outline-offset: 2px; }
+.skip-link { position: absolute; left: -999px; top: 0; z-index: 100; background: #fff; padding: .75rem 1rem; }
+.skip-link:focus { left: 0; }
+.tabel-scroll { overflow-x: auto; }
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}
